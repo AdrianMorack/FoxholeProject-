@@ -3,9 +3,17 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Illuminate\Support\Facades\Http;
 
 class WarStatus extends Component
 {
+    public $data;
+
+    public function mount()
+    {
+        $this->data = Http::get('https://war-service-live.foxholeservices.com/api/worldconquest/war')->json();
+    }
+
     public function render()
     {
         return view('livewire.war-status');
