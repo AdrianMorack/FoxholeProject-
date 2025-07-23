@@ -16,6 +16,6 @@ class WarStatus extends Component
 
     public function render()
     {
-        return view('livewire.war-status');
+        return view('livewire.war-status')->layout('layouts.app');
     }
 }

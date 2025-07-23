@@ -2,14 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
-use App\Livewire\WarStatus;
 
-Route::get('/', function () {
-    return view('home');
-});
 
 //This is routing to all the website tools
-Route::get('/war-status', WarStatus::class)->name('WarStatus');
+Route::get('/', \App\Livewire\HomePage::class)->name('home');
+Route::get('/war-status', \App\Livewire\WarStatus::class)->name('war.status');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

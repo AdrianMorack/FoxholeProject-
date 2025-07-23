@@ -1,3 +1,7 @@
 <div>
-    {{-- Because she competes with no one, no one can compete with her. --}}
+    <h1>Welcome to the Foxhole Tool</h1>
+
+    <a href="{{ route('war.status') }}">
+        <button type="button">View War Status</button>
+    </a>
 </div>
