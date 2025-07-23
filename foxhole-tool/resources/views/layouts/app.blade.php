@@ -14,3 +14,7 @@
     @livewireScripts
 </body>
 </html>
+
+<a href="{{ route('war.status') }}">
+    <button type="button">View War Status</button>
+</a>
