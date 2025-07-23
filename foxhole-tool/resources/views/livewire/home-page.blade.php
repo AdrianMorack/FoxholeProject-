@@ -1,7 +1,6 @@
-<div>
-    <h1>Welcome to the Foxhole Tool</h1>
+<div wire:poll.1s>
+    <h2>Available Maps</h2>
 
-     <!-- <a href="{{ route('war.status') }}">
-        <button type="button">View War Status</button>
-    </a> -->
+    <pre>{{ json_encode($data, JSON_PRETTY_PRINT) }}</pre>
+
 </div>

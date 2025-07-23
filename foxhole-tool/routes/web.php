@@ -5,7 +5,7 @@ use Livewire\Volt\Volt;
 
 
 //This is routing to all the website tools
-Route::get('/', \App\Livewire\HomePage::class)->name('home');
+Route::get('/', \App\Livewire\HomePage::class)->name('home.page');
 Route::get('/war-status', \App\Livewire\WarStatus::class)->name('war.status');
 
 Route::view('dashboard', 'dashboard')

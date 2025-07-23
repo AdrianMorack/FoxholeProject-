@@ -8,13 +8,18 @@
     @livewireStyles
 </head>
 <body>
-
+    <!-- TITLE HANDLER -->
+    <h1>{{ $title ?? 'Foxhole Tool' }}</h1>
+    
+    <!-- BUTTONS -->
+    <a href="{{ route('home.page') }}">
+        <button type="button">Home Page</button>
+    </a>
+    <a href="{{ route('war.status') }}">
+        <button type="button">View War Status</button>
+    </a>
     {{ $slot }}
 
     @livewireScripts
 </body>
 </html>
-
-<a href="{{ route('war.status') }}">
-    <button type="button">View War Status</button>
-</a>
