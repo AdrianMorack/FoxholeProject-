@@ -1,46 +1,47 @@
+<!-- ====== Styles for map buttons ====== -->
 <style>
-    /* ====== Container for map buttons ====== */
+    /* Container for all map buttons: flexible row, wrap to new lines, gap between buttons */
     .map-buttons {
-        display: flex;       /* Use flexbox to line up buttons */
-        flex-wrap: wrap;     /* Allow buttons to move to next line if needed */
-        gap: 8px;            /* Space between buttons */
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
     }
     
-    /* ====== Individual map button styling ====== */
+    /* Individual map button styling */
     .map-button {
-        padding: 8px 12px;   /* Add vertical + horizontal padding */
-        background-color: #002fff; /* Blue background */
-        border: none;        /* Remove default button border */
-        color: white;        /* White text */
-        border-radius: 4px;  /* Rounded corners */
-        cursor: pointer;     /* Show pointer cursor on hover */
+        padding: 8px 12px;            /* Space inside the button */
+        background-color: #002fff;     /* Blue background */
+        border: none;                  /* Remove default button border */
+        color: white;                  /* White text */
+        border-radius: 4px;            /* Rounded corners */
+        cursor: pointer;               /* Pointer cursor on hover */
     }
     
-    /* ====== Hover state ====== */
+    /* Hover effect for buttons */
     .map-button:hover {
-        background-color: #000000; /* Darken on hover */
+        background-color: #000000;     /* Darken background on hover */
     }
 </style>
 
-<div wire:poll.1s> <!-- ====== Livewire auto-refresh every 1 second ====== -->
+<!-- ====== Main container that polls Livewire component every 1 second ====== -->
+<div wire:poll.1s>
 
-    <h2>Available Maps</h2> <!-- Title -->
+    <!-- Heading for available maps -->
+    <h2>Available Maps</h2>
 
+    <!-- Check if mapNames array is not empty -->
     @if (!empty($mapNames))
-        <!-- ====== Display a list of maps as buttons ====== -->
-        <ul class="map-buttons">
+        <ul>
+            <!-- Loop over each map name -->
             @foreach ($mapNames as $map)
-                <button 
-                    type="button" 
-                    wire:click="loadMapData('{{ $map }}')" <!-- Trigger Livewire method to load map data -->
-                    class="map-button"                     <!-- Apply button styling -->
-                >
-                    {{ $map }} <!-- Display map name -->
+                <!-- Button to load map data via Livewire click event -->
+                <button type="button" wire:click="loadMapData('{{ $map }}')" class="map-button">
+                    {{ $map }} <!-- Display the map name on the button -->
                 </button>
             @endforeach
         </ul>
     @else
-        <!-- ====== Loading state if maps are not yet loaded ====== -->
+        <!-- Show loading message if mapNames is empty -->
         <p>Loading maps...</p>
     @endif
 

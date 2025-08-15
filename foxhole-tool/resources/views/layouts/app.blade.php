@@ -18,6 +18,9 @@
     <a href="{{ route('war.status') }}">
         <button type="button">View War Status</button>
     </a>
+    <a href="{{ route('war.map') }}">
+        <button type="button">View War Map</button>
+    </a>
     {{ $slot }}
 
     @livewireScripts

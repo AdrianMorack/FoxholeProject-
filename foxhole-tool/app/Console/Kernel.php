@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
     {
         // Schedule the custom Foxhole update command to run every minute
         // This will call the command defined in app/Console/Commands/FoxholeUpdate.php
-        $schedule->command('foxhole:update')->everyMinute();
+        $schedule->command('foxhole:update')->hourly();
     }
 
     /**
