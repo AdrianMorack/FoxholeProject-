@@ -7,7 +7,7 @@
     
     .map-button {
         padding: 8px 12px;
-        background-color: #505050;
+        background-color: #002fff;
         border: none;
         color: white;
         border-radius: 4px;
