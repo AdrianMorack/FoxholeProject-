@@ -7,7 +7,7 @@ use Livewire\Volt\Volt;
 //This is routing to all the website tools
 Route::get('/', \App\Livewire\HomePage::class)->name('home.page');
 Route::get('/war-status', \App\Livewire\WarStatus::class)->name('war.status');
-Route::get('/war-map', \App\Livewire\MapViewer::class)->name('war.map');
+Route::get('/war-viewer', \App\Livewire\MapViewer::class)->name('map.viewer');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
