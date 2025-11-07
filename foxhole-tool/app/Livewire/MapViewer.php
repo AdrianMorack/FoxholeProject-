@@ -12,28 +12,31 @@ class MapViewer extends Component
     public function mount()
     {
         // Fetch the town/hex icons you want to display
-        $icons = MapIcon::whereIn('id', [56, 57, 58])
-            ->get(['x', 'y', 'team_id', 'icon_type']); // only fields we actually use
+        $icons = MapIcon::whereIn('icon_type', [56, 57, 58])
+            ->get(['x', 'y', 'team_id', 'icon_type', 'map_name']); // only fields we actually use
 
         // Assign default team colors
         $teamColors = [
-            'RedTeam' => '#ff0000',
-            'BlueTeam' => '#0000ff',
-            'GreenTeam' => '#00ff00',
+            'WARDENS'   => '#0000ff',
+            'COLONIALS' => '#00ff00',
+            'NONE' => '#000000',
         ];
 
         $this->towns = $icons->map(function ($icon) use ($teamColors) {
-            return [
+            $teamId = strtoupper($icon->team_id ?? 'NONE');
+            Log::info('MapViewer TeamName:', ['team_id' => $icon->team_id]);            return [
                 'x' => isset($icon->x) ? (float)$icon->x : 0.5,  // fallback to center
                 'y' => isset($icon->y) ? (float)$icon->y : 0.5,  // fallback to center
                 'size' => 0.03,                                  // fraction of map width
                 'team_color' => $teamColors[$icon->team_id] ?? '#ff0000', // fallback color
-                'name' => $icon->icon_type ?? 'Town',            // fallback name
+                'type' => $icon->icon_type ?? 'NO TYPE',            // fallback name
+                
             ];
         })->toArray();
 
         // Debugging: log towns to storage/logs/laravel.log
         Log::info('MapViewer towns:', $this->towns);
+        
     }
 
     public function render()
