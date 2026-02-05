@@ -44,12 +44,12 @@
         <!-- Total Structures -->
         <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-6 border border-slate-700 shadow-xl hover:shadow-2xl transition-all hover:scale-105">
             <div class="flex items-center justify-between mb-2">
-                <div class="text-gray-400 text-sm uppercase tracking-wide font-semibold">Structures</div>
+                <div class="text-gray-400 text-sm uppercase tracking-wide font-semibold">Town Halls</div>
                 <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"/>
                 </svg>
             </div>
-            <div class="text-4xl font-bold text-yellow-400">{{ $stats['total_icons'] }}</div>
+            <div class="text-4xl font-bold text-yellow-400">{{ $stats['total_townhalls'] }}</div>
         </div>
     </div>
 
@@ -65,23 +65,23 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Wardens -->
             <div class="text-center p-6 rounded-lg bg-gradient-to-br from-blue-900/20 to-blue-800/10 border border-blue-500/30">
-                <div class="text-7xl font-bold mb-3" style="color: #60a5fa;">{{ $stats['warden_icons'] }}</div>
-                <div class="text-gray-300 text-lg font-semibold uppercase tracking-wide">Warden Structures</div>
-                <div class="mt-2 h-2 bg-blue-500 rounded-full" style="width: {{ ($stats['total_icons'] > 0) ? ($stats['warden_icons'] / $stats['total_icons'] * 100) : 0 }}%"></div>
+                <div class="text-7xl font-bold mb-3" style="color: #60a5fa;">{{ $stats['warden_townhalls'] }}</div>
+                <div class="text-gray-300 text-lg font-semibold uppercase tracking-wide">Warden Town Halls</div>
+                <div class="mt-2 h-2 bg-blue-500 rounded-full" style="width: {{ ($stats['total_townhalls'] > 0) ? ($stats['warden_townhalls'] / $stats['total_townhalls'] * 100) : 0 }}%"></div>
             </div>
 
             <!-- Colonials -->
             <div class="text-center p-6 rounded-lg bg-gradient-to-br from-green-900/20 to-green-800/10 border border-green-500/30">
-                <div class="text-7xl font-bold mb-3" style="color: #4ade80;">{{ $stats['colonial_icons'] }}</div>
-                <div class="text-gray-300 text-lg font-semibold uppercase tracking-wide">Colonial Structures</div>
-                <div class="mt-2 h-2 bg-green-500 rounded-full" style="width: {{ ($stats['total_icons'] > 0) ? ($stats['colonial_icons'] / $stats['total_icons'] * 100) : 0 }}%"></div>
+                <div class="text-7xl font-bold mb-3" style="color: #4ade80;">{{ $stats['colonial_townhalls'] }}</div>
+                <div class="text-gray-300 text-lg font-semibold uppercase tracking-wide">Colonial Town Halls</div>
+                <div class="mt-2 h-2 bg-green-500 rounded-full" style="width: {{ ($stats['total_townhalls'] > 0) ? ($stats['colonial_townhalls'] / $stats['total_townhalls'] * 100) : 0 }}%"></div>
             </div>
 
-            <!-- Neutral -->
-            <div class="text-center p-6 rounded-lg bg-gradient-to-br from-gray-900/20 to-gray-800/10 border border-gray-500/30">
-                <div class="text-7xl font-bold text-gray-400 mb-3">{{ $stats['neutral_icons'] }}</div>
-                <div class="text-gray-300 text-lg font-semibold uppercase tracking-wide">Neutral Structures</div>
-                <div class="mt-2 h-2 bg-gray-500 rounded-full" style="width: {{ ($stats['total_icons'] > 0) ? ($stats['neutral_icons'] / $stats['total_icons'] * 100) : 0 }}%"></div>
+            <!-- Victory Requirement -->
+            <div class="text-center p-6 rounded-lg bg-gradient-to-br from-yellow-900/20 to-yellow-800/10 border border-yellow-500/30">
+                <div class="text-7xl font-bold mb-3" style="color: #fbbf24;">{{ $stats['townhalls_to_win'] }}</div>
+                <div class="text-gray-300 text-lg font-semibold uppercase tracking-wide">To Win</div>
+                <div class="mt-2 h-2 bg-yellow-500 rounded-full" style="width: 100%"></div>
             </div>
         </div>
     </div>
