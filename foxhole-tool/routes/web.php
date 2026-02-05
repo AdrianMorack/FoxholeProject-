@@ -10,6 +10,14 @@ Route::get('/war-status', \App\Livewire\WarStatus::class)->name('war.status');
 Route::get('/war-maps', \App\Livewire\MapList::class)->name('map.list');
 Route::get('/war-maps/{mapName}', \App\Livewire\MapViewer::class)->name('map-viewer');
 
+// Shard switcher
+Route::post('/shard/toggle', function () {
+    $current = session('foxhole_shard', 'baker');
+    $new = $current === 'able' ? 'baker' : 'able';
+    session(['foxhole_shard' => $new]);
+    return redirect()->back();
+})->name('shard.toggle');
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');

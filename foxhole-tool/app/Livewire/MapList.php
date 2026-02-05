@@ -12,11 +12,14 @@ class MapList extends Component
 
     public function mount()
     {
-        // Cache map list for 5 minutes to avoid repeated queries
-        $this->maps = Cache::remember('map_list', 300, function () {
+        $shard = session('foxhole_shard', 'baker');
+        
+        // Cache map list for 5 minutes per shard to avoid repeated queries
+        $this->maps = Cache::remember("map_list_{$shard}", 300, function () use ($shard) {
             return MapIcon::select('map_name')
                 ->selectRaw('COUNT(*) as icon_count')
                 ->selectRaw('COUNT(DISTINCT team_id) as team_count')
+                ->where('shard', $shard)
                 ->whereIn('icon_type', [56, 57, 58])
                 ->groupBy('map_name')
                 ->orderBy('map_name')

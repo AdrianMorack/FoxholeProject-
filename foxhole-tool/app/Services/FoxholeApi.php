@@ -7,8 +7,23 @@ use App\Models\ApiEtag;               // DB model for storing API ETag data
 
 class FoxholeApi
 {
-    // Base URL for the official Foxhole War Service API
-    private string $base = 'https://war-service-live.foxholeservices.com/api';
+    // Shard URLs - can be swapped via UI
+    private array $shards = [
+        'able'  => 'https://war-service-live.foxholeservices.com/api',
+        'baker' => 'https://war-service-live-2.foxholeservices.com/api',
+    ];
+
+    // Get the current active shard from session
+    private function getCurrentShard(): string
+    {
+        return session('foxhole_shard', 'baker'); // default to baker
+    }
+
+    // Public method to get current shard (for use in sync service)
+    public function getShard(): string
+    {
+        return $this->getCurrentShard();
+    }
 
     // Generic GET request wrapper that also handles ETag caching
     private function getWithEtag(string $path, string $etagKey): ?array
@@ -23,11 +38,15 @@ class FoxholeApi
             $headers['If-None-Match'] = $etag->etag;
         }
 
+        // Get base URL for current shard
+        $shard = $this->getCurrentShard();
+        $baseUrl = $this->shards[$shard] ?? $this->shards['baker'];
+
         // Make the HTTP GET request with optional headers and 60s timeout
         $resp = Http::withHeaders($headers)
                     ->timeout(60)
-                    ->retry(3, 100) // Retry 3 times with 100ms delay
-                    ->get("{$this->base}{$path}");
+                    ->retry(2, 100)
+                    ->get("{$baseUrl}{$path}");
 
         // If API says 304 Not Modified → data hasn't changed
         if ($resp->status() === 304) {

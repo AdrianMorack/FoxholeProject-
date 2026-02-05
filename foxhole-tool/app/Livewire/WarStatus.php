@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component; // Base Livewire component class
 use Illuminate\Support\Facades\Http; // HTTP client for making API requests
 use Illuminate\Support\Facades\Cache; // Cache facade for caching API responses
+use Illuminate\Support\Facades\Log; // Log facade for logging errors
 
 class WarStatus extends Component
 {
@@ -46,7 +47,7 @@ class WarStatus extends Component
                 
                 return null;
             } catch (\Exception $e) {
-                \Log::error('Failed to fetch war status: ' . $e->getMessage());
+                Log::error('Failed to fetch war status: ' . $e->getMessage());
                 return null;
             }
         });

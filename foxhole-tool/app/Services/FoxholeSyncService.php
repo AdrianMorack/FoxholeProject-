@@ -17,32 +17,33 @@ class FoxholeSyncService
     // Main entry point for running the sync
     public function run(): void
     {
-        $this->info("Starting Foxhole sync..."); // start log
+        $shard = $this->api->getShard(); // Get current shard
+        $this->info("Starting Foxhole sync for shard: {$shard}..."); // start log
 
         try {
-            $this->syncWar();              // sync war state info first
+            $this->syncWar($shard);              // sync war state info first
         } catch (\Exception $e) {
             $this->info("Failed to sync war state: " . $e->getMessage());
         }
         
-        $maps = $this->syncMaps();     // grab the map list from API + DB
+        $maps = $this->syncMaps($shard);     // grab the map list from API + DB
 
         // Loop through each map and sync extra data
         foreach ($maps as $name) {
             try {
-                $this->syncWarReport($name); // fetch & store war report stats
+                $this->syncWarReport($name, $shard); // fetch & store war report stats
             } catch (\Exception $e) {
                 $this->info("Failed to sync war report for $name: " . $e->getMessage());
             }
             
             try {
-                $this->syncDynamic($name);   // fetch & store live map icons
+                $this->syncDynamic($name, $shard);   // fetch & store live map icons
             } catch (\Exception $e) {
                 $this->info("Failed to sync dynamic data for $name: " . $e->getMessage());
             }
         }
 
-        $this->info("Foxhole sync complete."); // end log
+        $this->info("Foxhole sync complete for shard: {$shard}."); // end log
     }
 
     // Helper to convert ms timestamps to Carbon dates
@@ -57,7 +58,7 @@ class FoxholeSyncService
     }
 
     // Pull the war state from API and update DB
-    private function syncWar(): void
+    private function syncWar(string $shard): void
     {
         $data = $this->api->war(); // call the API
         if (!$data) { // if API gave nothing, skip
@@ -67,7 +68,7 @@ class FoxholeSyncService
 
         // Update or insert war record
         WarState::updateOrCreate(
-            ['war_id' => $data['warId']], // look up by war_id
+            ['war_id' => $data['warId'], 'shard' => $shard], // look up by war_id AND shard
             [
                 'war_number' => $data['warNumber'] ?? null, // war # if any
                 'winner' => $data['winner'] ?? 'NONE',      // winner side or NONE
@@ -84,25 +85,25 @@ class FoxholeSyncService
     }
 
     // Get all map names and make sure they exist in DB
-    private function syncMaps(): array
+    private function syncMaps(string $shard): array
     {
         $data = $this->api->maps(); // API returns array of map names
         if ($data) {
             foreach ($data as $name) {
-                // Only create if map doesn’t exist yet
-                MapModel::firstOrCreate(['name' => $name]);
+                // Only create if map doesn't exist yet for this shard
+                MapModel::firstOrCreate(['name' => $name, 'shard' => $shard]);
             }
             $this->info("Maps synced: " . count($data)); // log map count
         } else {
             $this->info("No maps returned."); // log if API empty
         }
 
-        // Return full list of maps from DB sorted by name
-        return MapModel::orderBy('name')->pluck('name')->all();
+        // Return full list of maps from DB for this shard sorted by name
+        return MapModel::where('shard', $shard)->orderBy('name')->pluck('name')->all();
     }
 
     // Store war report for a single map
-    private function syncWarReport(string $map): void
+    private function syncWarReport(string $map, string $shard): void
     {
         $data = $this->api->warReport($map); // get war report
         if (!$data) { // no data? skip
@@ -113,6 +114,7 @@ class FoxholeSyncService
         // Create new report entry
         MapReport::create([
             'map_name' => $map, // which map this report is for
+            'shard' => $shard,
             'total_enlistments' => $data['totalEnlistments'] ?? 0,
             'colonial_casualties' => $data['colonialCasualties'] ?? 0,
             'warden_casualties' => $data['wardenCasualties'] ?? 0,
@@ -124,7 +126,7 @@ class FoxholeSyncService
     }
 
     // Store dynamic icons (bases, facilities, etc.) for a single map
-    private function syncDynamic(string $map): void
+    private function syncDynamic(string $map, string $shard): void
     {
         $payload = $this->api->dynamic($map); // get dynamic map data
         if (!$payload) { // no data? skip
@@ -132,14 +134,14 @@ class FoxholeSyncService
             return;
         }
 
-        // Latest war_id from DB, or fallback if nothing in DB yet
-        $warId = optional(WarState::latest('updated_at')->first())->war_id ?? 'unknown';
+        // Latest war_id from DB for this shard, or fallback if nothing in DB yet
+        $warId = optional(WarState::where('shard', $shard)->latest('updated_at')->first())->war_id ?? 'unknown';
         $items = $payload['mapItems'] ?? []; // the icons from API
         $lastUpdated = $payload['lastUpdated'] ?? null; // ms timestamp
         $version = $payload['version'] ?? null; // version #
 
         // Run insert/update in a transaction so it's atomic
-        DB::transaction(function () use ($items, $map, $warId, $version, $lastUpdated) {
+        DB::transaction(function () use ($items, $map, $warId, $version, $lastUpdated, $shard) {
             foreach ($items as $it) {
                 // Format x/y to fixed 8 decimal places (matches DB schema)
                 $x = number_format($it['x'], 8, '.', '');
@@ -148,6 +150,7 @@ class FoxholeSyncService
                 // Unique key to match existing DB row
                 $key = [
                     'war_id'   => $warId,
+                    'shard'    => $shard,
                     'map_name' => $map,
                     'icon_type'=> $it['iconType'],
                     'x'        => $x,

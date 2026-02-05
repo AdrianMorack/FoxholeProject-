@@ -14,9 +14,11 @@ class MapViewer extends Component
     public function mount($mapName = 'CallahansPassageHex')
     {
         $this->selectedMap = $mapName;
+        $shard = session('foxhole_shard', 'baker');
         
-        // Fetch icons for the selected hex only
+        // Fetch icons for the selected hex only from current shard
         $icons = MapIcon::where('map_name', $this->selectedMap)
+            ->where('shard', $shard)
             ->whereIn('icon_type', [56, 57, 58])
             ->get(['x', 'y', 'team_id', 'icon_type', 'map_name']);
 
