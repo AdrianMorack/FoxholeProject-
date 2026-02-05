@@ -23,9 +23,10 @@ class FoxholeApi
             $headers['If-None-Match'] = $etag->etag;
         }
 
-        // Make the HTTP GET request with optional headers and 20s timeout
+        // Make the HTTP GET request with optional headers and 60s timeout
         $resp = Http::withHeaders($headers)
-                    ->timeout(20)
+                    ->timeout(60)
+                    ->retry(3, 100) // Retry 3 times with 100ms delay
                     ->get("{$this->base}{$path}");
 
         // If API says 304 Not Modified → data hasn't changed

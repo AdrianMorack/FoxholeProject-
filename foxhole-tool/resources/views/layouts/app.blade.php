@@ -33,9 +33,9 @@
     <h1>{{ $title ?? 'Foxhole Tool' }}</h1>
 
     <!-- NAVIGATION -->
-    <a href="{{ route('home.page') }}"><button>Home Page</button></a>
-    <a href="{{ route('war.status') }}"><button>View War Status</button></a>
-    <a href="{{ route('map.viewer') }}"><button>View War Map</button></a>
+    <a href="{{ route('home.page') }}" wire:navigate><button>Home Page</button></a>
+    <a href="{{ route('war.status') }}" wire:navigate><button>View War Status</button></a>
+    <a href="{{ route('map.list') }}" wire:navigate><button>View War Maps</button></a>
 
     <!-- Livewire component output -->
     {{ $slot }}

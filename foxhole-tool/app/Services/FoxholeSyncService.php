@@ -19,13 +19,27 @@ class FoxholeSyncService
     {
         $this->info("Starting Foxhole sync..."); // start log
 
-        $this->syncWar();              // sync war state info first
+        try {
+            $this->syncWar();              // sync war state info first
+        } catch (\Exception $e) {
+            $this->info("Failed to sync war state: " . $e->getMessage());
+        }
+        
         $maps = $this->syncMaps();     // grab the map list from API + DB
 
         // Loop through each map and sync extra data
         foreach ($maps as $name) {
-            $this->syncWarReport($name); // fetch & store war report stats
-            $this->syncDynamic($name);   // fetch & store live map icons
+            try {
+                $this->syncWarReport($name); // fetch & store war report stats
+            } catch (\Exception $e) {
+                $this->info("Failed to sync war report for $name: " . $e->getMessage());
+            }
+            
+            try {
+                $this->syncDynamic($name);   // fetch & store live map icons
+            } catch (\Exception $e) {
+                $this->info("Failed to sync dynamic data for $name: " . $e->getMessage());
+            }
         }
 
         $this->info("Foxhole sync complete."); // end log

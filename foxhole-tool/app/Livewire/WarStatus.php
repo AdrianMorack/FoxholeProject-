@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component; // Base Livewire component class
 use Illuminate\Support\Facades\Http; // HTTP client for making API requests
+use Illuminate\Support\Facades\Cache; // Cache facade for caching API responses
 
 class WarStatus extends Component
 {
@@ -32,8 +33,22 @@ class WarStatus extends Component
      */
     public function mount()
     {
-        // Fetch current war data from Foxhole API and decode JSON response
-        $this->data = Http::get('https://war-service-live.foxholeservices.com/api/worldconquest/war')
-                          ->json();
+        // Cache war status for 5 minutes to avoid slow API calls on every page load
+        $this->data = Cache::remember('war_status', 300, function () {
+            try {
+                $response = Http::timeout(10)
+                    ->retry(2, 100)
+                    ->get('https://war-service-live.foxholeservices.com/api/worldconquest/war');
+                
+                if ($response->successful()) {
+                    return $response->json();
+                }
+                
+                return null;
+            } catch (\Exception $e) {
+                \Log::error('Failed to fetch war status: ' . $e->getMessage());
+                return null;
+            }
+        });
     }
 }

@@ -1,21 +1,81 @@
 <?php
 
-namespace App\Models; // Lives under app/Models so Laravel auto-loads it
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model; // Base Eloquent ORM class
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Map extends Model
 {
     /**
-     * ====== Mass assignment ======
-     * Defines which attributes can be bulk-assigned via create(), update(), etc.
+     * The table associated with the model.
      *
-     * @var list<string>
+     * @var string
+     */
+    protected $table = 'maps';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
      */
     protected $fillable = [
-        'name',            // Name of the map (e.g., AcrithiaHex)
-        'region_id',       // Optional ID representing the map's region or grouping
-        'last_updated_ms', // Last updated timestamp in milliseconds since epoch
-        'version',         // Version of the map data
+        'name',
+        'region_id',
+        'last_updated_ms',
+        'version',
     ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'region_id' => 'integer',
+        'last_updated_ms' => 'integer',
+        'version' => 'integer',
+    ];
+
+    /**
+     * Get all map reports for this map.
+     *
+     * @return HasMany
+     */
+    public function reports(): HasMany
+    {
+        return $this->hasMany(MapReport::class, 'map_name', 'name');
+    }
+
+    /**
+     * Get all map icons for this map.
+     *
+     * @return HasMany
+     */
+    public function icons(): HasMany
+    {
+        return $this->hasMany(MapIcon::class, 'map_name', 'name');
+    }
+
+    /**
+     * Get the latest report for this map.
+     *
+     * @return MapReport|null
+     */
+    public function latestReport(): ?MapReport
+    {
+        return $this->reports()->latest('fetched_at')->first();
+    }
+
+    /**
+     * Scope a query to only include maps with recent updates.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int $minutes
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeRecentlyUpdated($query, int $minutes = 60)
+    {
+        return $query->where('updated_at', '>=', now()->subMinutes($minutes));
+    }
 }
