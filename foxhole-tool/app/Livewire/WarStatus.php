@@ -3,9 +3,9 @@
 namespace App\Livewire;
 
 use Livewire\Component; // Base Livewire component class
-use Illuminate\Support\Facades\Http; // HTTP client for making API requests
 use Illuminate\Support\Facades\Cache; // Cache facade for caching API responses
 use Illuminate\Support\Facades\Log; // Log facade for logging errors
+use App\Services\FoxholeApi; // Our API service with shard support
 
 class WarStatus extends Component
 {
@@ -16,6 +16,7 @@ class WarStatus extends Component
      * @var array|null
      */
     public $data; // Holds the current war status data fetched from the Foxhole API
+    public $stats; // Additional statistics from map reports
 
     /**
      * ====== Component render ======
@@ -34,15 +35,16 @@ class WarStatus extends Component
      */
     public function mount()
     {
-        // Cache war status for 5 minutes to avoid slow API calls on every page load
-        $this->data = Cache::remember('war_status', 300, function () {
+        $shard = session('foxhole_shard', 'baker');
+        
+        // Cache war status for 5 minutes per shard to avoid slow API calls on every page load
+        $this->data = Cache::remember("war_status_{$shard}", 300, function () {
             try {
-                $response = Http::timeout(10)
-                    ->retry(2, 100)
-                    ->get('https://war-service-live.foxholeservices.com/api/worldconquest/war');
+                $api = new FoxholeApi();
+                $response = $api->war();
                 
-                if ($response->successful()) {
-                    return $response->json();
+                if ($response) {
+                    return $response;
                 }
                 
                 return null;
@@ -50,6 +52,28 @@ class WarStatus extends Component
                 Log::error('Failed to fetch war status: ' . $e->getMessage());
                 return null;
             }
+        });
+        
+        // Get additional stats from database
+        $this->stats = Cache::remember("war_status_stats_{$shard}", 300, function () use ($shard) {
+            $warState = \App\Models\WarState::where('shard', $shard)->latest()->first();
+            $warId = $warState?->war_id;
+            
+            // Get latest map reports for this shard
+            $reports = \App\Models\MapReport::where('shard', $shard)
+                ->orderBy('fetched_at', 'desc')
+                ->get();
+            
+            return [
+                'total_enlistments' => $reports->sum('total_enlistments'),
+                'colonial_casualties' => $reports->sum('colonial_casualties'),
+                'warden_casualties' => $reports->sum('warden_casualties'),
+                'total_casualties' => $reports->sum('colonial_casualties') + $reports->sum('warden_casualties'),
+                'active_maps' => \App\Models\MapIcon::where('shard', $shard)->where('war_id', $warId)->distinct('map_name')->count('map_name'),
+                'total_structures' => \App\Models\MapIcon::where('shard', $shard)->where('war_id', $warId)->whereIn('icon_type', [56, 57, 58])->count(),
+                'victory_points_warden' => \App\Models\MapIcon::where('shard', $shard)->where('war_id', $warId)->where('team_id', 'WARDENS')->whereIn('icon_type', [56, 57, 58])->whereRaw('(flags & 1) = 1')->count(),
+                'victory_points_colonial' => \App\Models\MapIcon::where('shard', $shard)->where('war_id', $warId)->where('team_id', 'COLONIALS')->whereIn('icon_type', [56, 57, 58])->whereRaw('(flags & 1) = 1')->count(),
+            ];
         });
     }
 }

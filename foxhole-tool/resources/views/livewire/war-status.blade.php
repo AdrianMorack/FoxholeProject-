@@ -15,7 +15,7 @@
                     </svg>
                     <div class="text-gray-400 text-sm uppercase tracking-wide font-semibold">War Number</div>
                 </div>
-                <div class="text-5xl font-bold text-blue-400">#{{ $data['warId'] ?? 'Unknown' }}</div>
+                <div class="text-5xl font-bold text-blue-400">#{{ $data['warNumber'] ?? 'Unknown' }}</div>
             </div>
 
             <!-- War Duration -->
@@ -27,7 +27,11 @@
                     <div class="text-gray-400 text-sm uppercase tracking-wide font-semibold">War Day</div>
                 </div>
                 <div class="text-5xl font-bold text-purple-400">
-                    {{ isset($data['warNumber']) ? floor(($data['warNumber'] ?? 0) / (1000 * 60 * 60 * 24)) : 'N/A' }}
+                    @if(isset($data['conquestStartTime']))
+                        {{ floor((now()->timestamp * 1000 - $data['conquestStartTime']) / (1000 * 60 * 60 * 24)) }}
+                    @else
+                        N/A
+                    @endif
                 </div>
             </div>
 
@@ -54,13 +58,63 @@
                 </div>
                 <div class="text-2xl font-bold text-yellow-400">
                     @if(isset($data['conquestStartTime']))
-                        {{ \Carbon\Carbon::parse($data['conquestStartTime'])->diffForHumans() }}
+                        {{ \Carbon\Carbon::createFromTimestampMs($data['conquestStartTime'])->diffForHumans() }}
                     @else
                         Unknown
                     @endif
                 </div>
             </div>
         </div>
+
+        <!-- Casualties and Stats -->
+        @if($stats)
+        <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-8 border border-slate-700 shadow-xl mb-8">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <svg class="w-7 h-7 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                </svg>
+                War Statistics
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Total Casualties -->
+                <div class="text-center p-6 rounded-lg bg-gradient-to-br from-red-900/20 to-red-800/10 border border-red-500/30">
+                    <div class="text-6xl font-bold text-red-400 mb-2">{{ number_format($stats['total_casualties']) }}</div>
+                    <div class="text-gray-300 text-sm font-semibold uppercase tracking-wide">Total Casualties</div>
+                </div>
+
+                <!-- Warden Casualties -->
+                <div class="text-center p-6 rounded-lg bg-gradient-to-br from-blue-900/20 to-blue-800/10 border border-blue-500/30">
+                    <div class="text-6xl font-bold" style="color: #60a5fa;">{{ number_format($stats['warden_casualties']) }}</div>
+                    <div class="text-gray-300 text-sm font-semibold uppercase tracking-wide">Warden Casualties</div>
+                </div>
+
+                <!-- Colonial Casualties -->
+                <div class="text-center p-6 rounded-lg bg-gradient-to-br from-green-900/20 to-green-800/10 border border-green-500/30">
+                    <div class="text-6xl font-bold" style="color: #4ade80;">{{ number_format($stats['colonial_casualties']) }}</div>
+                    <div class="text-gray-300 text-sm font-semibold uppercase tracking-wide">Colonial Casualties</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                <!-- Victory Progress -->
+                <div class="text-center p-6 rounded-lg bg-gradient-to-br from-yellow-900/20 to-yellow-800/10 border border-yellow-500/30">
+                    <div class="text-4xl font-bold text-yellow-400 mb-2">
+                        {{ $stats['victory_points_warden'] }} / {{ $stats['victory_points_colonial'] }}
+                    </div>
+                    <div class="text-gray-300 text-sm font-semibold uppercase tracking-wide">Victory Points (W/C)</div>
+                    <div class="text-xs text-gray-400 mt-1">Need {{ $data['requiredVictoryTowns'] ?? 32 }} to win</div>
+                </div>
+
+                <!-- Total Enlistments -->
+                <div class="text-center p-6 rounded-lg bg-gradient-to-br from-purple-900/20 to-purple-800/10 border border-purple-500/30">
+                    <div class="text-4xl font-bold text-purple-400 mb-2">{{ number_format($stats['total_enlistments']) }}</div>
+                    <div class="text-gray-300 text-sm font-semibold uppercase tracking-wide">Total Enlistments</div>
+                    <div class="text-xs text-gray-400 mt-1">Across {{ $stats['active_maps'] }} active maps</div>
+                </div>
+            </div>
+        </div>
+        @endif
 
         <!-- Raw Data Toggle -->
         <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-6 border border-slate-700 shadow-xl">
