@@ -17,7 +17,7 @@ class FoxholeTest extends Command
         $start = microtime(true);
         
         try {
-            $response = Http::timeout(30)->get('https://war-service-live-2.foxholeservices.com/api/worldconquest/war');
+            $response = Http::timeout(30)->get('https://war-service-live.foxholeservices.com/api/worldconquest/war');
             $duration = round((microtime(true) - $start) * 1000);
             
             if ($response->successful()) {

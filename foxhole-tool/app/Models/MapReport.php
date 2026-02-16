@@ -14,6 +14,7 @@ class MapReport extends Model
      */
     protected $fillable = [
         'map_name',            // The name of the map this report belongs to
+        'shard',               // Which shard this report belongs to (able/baker)
         'total_enlistments',   // Total number of enlistments on this map
         'colonial_casualties', // Casualties for the Colonial faction
         'warden_casualties',   // Casualties for the Warden faction

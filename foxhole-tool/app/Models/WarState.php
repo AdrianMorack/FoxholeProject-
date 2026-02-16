@@ -18,6 +18,7 @@ class WarState extends Model
         'scheduled_conquest_end',   // Planned end date (can differ from actual)
         'required_victory_towns',   // Total towns needed for victory
         'short_required_victory_towns', // Shorter victory condition value
+        'shard',                    // Which shard this war belongs to (able/baker)
     ];
 
     // ====== Type casting ======

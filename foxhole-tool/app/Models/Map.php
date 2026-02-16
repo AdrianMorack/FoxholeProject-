@@ -21,6 +21,7 @@ class Map extends Model
      */
     protected $fillable = [
         'name',
+        'shard',
         'region_id',
         'last_updated_ms',
         'version',

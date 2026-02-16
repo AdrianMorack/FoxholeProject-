@@ -88,7 +88,7 @@
 
     <!-- Quick Access Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <a href="{{ route('war.status') }}" wire:navigate class="group block bg-gradient-to-br from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700 rounded-xl p-8 transition-all shadow-xl hover:shadow-2xl hover:scale-105">
+        <a href="{{ route('war.status', ['shard' => session('foxhole_shard', 'baker')]) }}" wire:navigate class="group block bg-gradient-to-br from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700 rounded-xl p-8 transition-all shadow-xl hover:shadow-2xl hover:scale-105">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-2xl font-bold text-white">War Status</h3>
                 <svg class="w-8 h-8 text-blue-200 group-hover:translate-x-2 transition-transform" fill="currentColor" viewBox="0 0 20 20">
@@ -98,7 +98,7 @@
             <p class="text-blue-100">View detailed war information, victory points, and real-time statistics</p>
         </a>
 
-        <a href="{{ route('map.list') }}" wire:navigate class="group block bg-gradient-to-br from-green-600 to-green-800 hover:from-green-500 hover:to-green-700 rounded-xl p-8 transition-all shadow-xl hover:shadow-2xl hover:scale-105">
+        <a href="{{ route('map.list', ['shard' => session('foxhole_shard', 'baker')]) }}" wire:navigate class="group block bg-gradient-to-br from-green-600 to-green-800 hover:from-green-500 hover:to-green-700 rounded-xl p-8 transition-all shadow-xl hover:shadow-2xl hover:scale-105">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-2xl font-bold text-white">War Maps</h3>
                 <svg class="w-8 h-8 text-green-200 group-hover:translate-x-2 transition-transform" fill="currentColor" viewBox="0 0 20 20">

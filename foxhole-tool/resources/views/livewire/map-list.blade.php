@@ -12,7 +12,7 @@
     
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-3">
         @foreach($maps as $map)
-            <a href="{{ route('map-viewer', ['mapName' => $map['name']]) }}" wire:navigate
+            <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => $map['name']]) }}" wire:navigate
                class="group block bg-gradient-to-br from-slate-800 to-slate-900 hover:from-slate-700 hover:to-slate-800 rounded-lg p-4 transition-all border border-slate-700 hover:border-blue-500 shadow-lg hover:shadow-xl hover:scale-105">
                 <div class="flex items-start justify-between mb-3">
                     <h2 class="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors leading-tight">{{ $map['display_name'] }}</h2>

@@ -97,7 +97,7 @@
     <!-- Navigation -->
     <nav class="nav-container">
         <div class="nav-content">
-            <a href="{{ route('home.page') }}" wire:navigate class="logo">
+            <a href="{{ route('home.page', ['shard' => session('foxhole_shard', 'baker')]) }}" wire:navigate class="logo">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
                 </svg>
@@ -105,9 +105,9 @@
             </a>
             
             <div class="nav-links">
-                <a href="{{ route('home.page') }}" wire:navigate class="nav-btn">Home</a>
-                <a href="{{ route('war.status') }}" wire:navigate class="nav-btn">War Status</a>
-                <a href="{{ route('map.list') }}" wire:navigate class="nav-btn">Maps</a>
+                <a href="{{ route('home.page', ['shard' => session('foxhole_shard', 'baker')]) }}" wire:navigate class="nav-btn">Home</a>
+                <a href="{{ route('war.status', ['shard' => session('foxhole_shard', 'baker')]) }}" wire:navigate class="nav-btn">War Status</a>
+                <a href="{{ route('map.list', ['shard' => session('foxhole_shard', 'baker')]) }}" wire:navigate class="nav-btn">Maps</a>
                 
                 <!-- Shard Switcher -->
                 <form action="{{ route('shard.toggle') }}" method="POST" style="display: inline;">

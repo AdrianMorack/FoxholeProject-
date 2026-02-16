@@ -14,6 +14,7 @@ class MapIcon extends Model
      */
     protected $fillable = [
         'war_id',          // ID of the war this icon belongs to
+        'shard',           // Which shard this icon belongs to (able/baker)
         'map_name',        // Name of the map this icon is placed on
         'team_id',         // Faction/team owning this icon (e.g., Warden, Colonial)
         'icon_type',       // Type/category of the icon (e.g., base, relic base, refinery)
