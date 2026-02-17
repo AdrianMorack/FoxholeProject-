@@ -9,6 +9,67 @@
             <div class="text-xs text-gray-400">Available</div>
         </div>
     </div>
+
+    <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg p-4 border border-slate-700 shadow-lg">
+        <h2 class="text-lg font-semibold text-white mb-1">World Map</h2>
+        <p class="text-sm text-gray-400 mb-4">Click a hex to open that region map</p>
+
+        <div class="relative w-full max-w-5xl mx-auto rounded-lg overflow-hidden border border-slate-700 bg-slate-900">
+            <!-- World Map Image -->
+            <img
+                src="{{ asset('images/WorldMap.webp') }}"
+                alt="World Map"
+                class="w-full h-auto object-contain block"
+                onerror="this.onerror=null; this.src='{{ asset('images/FoxholeMap.png') }}'"
+            >
+            
+            <!-- SVG Overlay for Interactive Hexes -->
+            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 2560 1554" preserveAspectRatio="xMidYMid meet" style="z-index: 10;">
+                <!-- ReachingTrailHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'ReachingTrailHex']) }}" 
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-841.29828,-168.97976)"
+                    >
+                        <title>Reaching Trail</title>
+                    </path>
+                </a>
+                
+                <!-- HowlCountyHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'HowlCountyHex']) }}" 
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-649.52202,-280.5699)"
+                    >
+                        <title>Howl County</title>
+                    </path>
+                </a>
+            </svg>
+        </div>
+    </div>
+
+    <style>
+        .hex-link {
+            cursor: pointer;
+        }
+
+        .hex-region {
+            fill: rgba(59, 130, 246, 0.25);
+            stroke: rgba(96, 165, 250, 0.8);
+            stroke-width: 3;
+            transition: all 0.2s ease;
+        }
+
+        .hex-link:hover .hex-region {
+            fill: rgba(59, 130, 246, 0.45);
+            stroke: rgba(96, 165, 250, 1);
+            stroke-width: 4;
+        }
+    </style>
     
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-3">
         @foreach($maps as $map)

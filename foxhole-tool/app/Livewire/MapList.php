@@ -27,7 +27,7 @@ class MapList extends Component
                 ->map(function ($map) {
                     return [
                         'name' => $map->map_name,
-                        'display_name' => str_replace('Hex', ' Hex', $map->map_name),
+                        'display_name' => str_replace('Hex', '', $map->map_name),
                         'icon_count' => $map->icon_count,
                         'team_count' => $map->team_count,
                     ];
