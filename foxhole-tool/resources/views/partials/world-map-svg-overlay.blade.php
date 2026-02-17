@@ -29,7 +29,7 @@
             ['id' => 'LinnMercyHex', 'd' => 'm 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z', 'transform' => 'matrix(1.7312139,0,0,1.7475518,-1032.3657,163.51175)'],
             ['id' => 'LochMorHex', 'd' => 'm 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z', 'transform' => 'matrix(1.7344755,0,0,1.7362531,-1037.0418,387.8942)'],
             ['id' => 'LykosIsleHex', 'd' => 'm 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z', 'transform' => 'matrix(1.7312139,0,0,1.7475518,116.37813,162.96769)'],
-            ['id' => 'MarbanHollowHex', 'd' => 'm 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z', 'transform' => 'matrix(1.7348962,0,0,1.7305441,-654.84129,168.04683)'],
+            ['id' => 'MarbanHollow', 'd' => 'm 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z', 'transform' => 'matrix(1.7348962,0,0,1.7305441,-654.84129,168.04683)'],
             ['id' => 'MooringCountyHex', 'd' => 'm 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z', 'transform' => 'matrix(1.711644,0,0,1.7287207,-1009.7877,-52.074794)'],
             ['id' => 'MorgensCrossingHex', 'd' => 'm 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z', 'transform' => 'matrix(1.7312139,0,0,1.7475518,-266.66183,-60.360184)'],
             ['id' => 'NevishLineHex', 'd' => 'm 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z', 'transform' => 'matrix(1.7312139,0,0,1.7475518,-1417.4538,-57.864278)'],
@@ -62,12 +62,17 @@
 
     @foreach($hexRegions as $hex)
         @php
-            $displayName = str_replace('Hex', '', $hex['id']);
-            if ($hex['id'] === 'HomeRegionC') {
-                $displayName = 'Colonial Home Region';
-            } elseif ($hex['id'] === 'HomeRegionW') {
-                $displayName = 'Warden Home Region';
-            }
+            // Map API names to display names
+            $displayNames = [
+                'TheFingersHex' => 'The Fingers',
+                'MooringCountyHex' => 'Mooring County',
+                'OarbreakerHex' => 'Oarbreaker Isles',
+                'MarbanHollow' => 'Marban Hollow',
+                'HomeRegionC' => 'Colonial Home Region',
+                'HomeRegionW' => 'Warden Home Region',
+            ];
+            
+            $displayName = $displayNames[$hex['id']] ?? str_replace('Hex', '', $hex['id']);
         @endphp
         <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => $hex['id']]) }}"
            class="hex-link">

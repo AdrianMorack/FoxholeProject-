@@ -21,10 +21,22 @@
 
                 <!-- Map Image -->
                 @php
-                    // HomeRegion files don't have 'Hex' suffix, others do
+                    // Map API names to image filenames (some don't match)
+                    $imageNameMap = [
+                        'TheFingersHex' => 'FingersHex',
+                        'MooringCountyHex' => 'MoorsHex',
+                        'OarbreakerHex' => 'OarbreakerIslesHex',
+                        'MarbanHollow' => 'MarbanHollowHex',
+                    ];
+                    
+                    // HomeRegion files don't have 'Hex' suffix
                     if (str_starts_with($selectedMap, 'HomeRegion')) {
                         $imageMapName = $selectedMap;
+                    } elseif (isset($imageNameMap[$selectedMap])) {
+                        // Use mapped name if it exists
+                        $imageMapName = $imageNameMap[$selectedMap];
                     } else {
+                        // Default: use map name as-is (most maps already have Hex suffix)
                         $imageMapName = str_ends_with($selectedMap, 'Hex') ? $selectedMap : $selectedMap . 'Hex';
                     }
                 @endphp
