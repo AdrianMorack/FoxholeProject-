@@ -21,8 +21,12 @@
 
                 <!-- Map Image -->
                 @php
-                    // Add 'Hex' suffix if not already present for image filename matching
-                    $imageMapName = str_ends_with($selectedMap, 'Hex') ? $selectedMap : $selectedMap . 'Hex';
+                    // HomeRegion files don't have 'Hex' suffix, others do
+                    if (str_starts_with($selectedMap, 'HomeRegion')) {
+                        $imageMapName = $selectedMap;
+                    } else {
+                        $imageMapName = str_ends_with($selectedMap, 'Hex') ? $selectedMap : $selectedMap . 'Hex';
+                    }
                 @endphp
                 <img id="map-image"
                      src="{{ asset('images/Map' . $imageMapName . '.png') }}"

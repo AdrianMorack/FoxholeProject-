@@ -23,32 +23,7 @@
                 onerror="this.onerror=null; this.src='{{ asset('images/FoxholeMap.png') }}'"
             >
             
-            <!-- SVG Overlay for Interactive Hexes -->
-            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 2560 1554" preserveAspectRatio="xMidYMid meet" style="z-index: 10;">
-                <!-- ReachingTrailHex -->
-                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'ReachingTrailHex']) }}" 
-                   class="hex-link">
-                    <path
-                       class="hex-region"
-                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
-                       transform="matrix(1.7312139,0,0,1.7475518,-841.29828,-168.97976)"
-                    >
-                        <title>Reaching Trail</title>
-                    </path>
-                </a>
-                
-                <!-- HowlCountyHex -->
-                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'HowlCountyHex']) }}" 
-                   class="hex-link">
-                    <path
-                       class="hex-region"
-                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
-                       transform="matrix(1.7312139,0,0,1.7475518,-649.52202,-280.5699)"
-                    >
-                        <title>Howl County</title>
-                    </path>
-                </a>
-            </svg>
+            @include('partials.world-map-svg-overlay')
         </div>
     </div>
 

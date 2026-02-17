@@ -1,0 +1,639 @@
+            <!-- SVG Overlay for Interactive Hexes -->
+            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 2560 1554" preserveAspectRatio="xMidYMid meet" style="z-index: 10;">
+                <!-- AcrithiaHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'AcrithiaHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7002139,0,0,1.7424381,-612.16661,830.76598)"
+                    >
+                        <title>Acrithia</title>
+                    </path>
+                </a>
+                
+                <!-- AllodsBightHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'AllodsBightHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7322108,-457.8699,500.8963)"
+                    >
+                        <title>AllodsBight</title>
+                    </path>
+                </a>
+                
+                <!-- AshFieldsHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'AshFieldsHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-1223.9686,718.62047)"
+                    >
+                        <title>AshFields</title>
+                    </path>
+                </a>
+                
+                <!-- BasinSionnachHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'BasinSionnachHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-842.15971,-391.10503)"
+                    >
+                        <title>BasinSionnach</title>
+                    </path>
+                </a>
+                
+                <!-- CallahansPassageHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'CallahansPassageHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-842.57372,52.183872)"
+                    >
+                        <title>CallahansPassage</title>
+                    </path>
+                </a>
+                
+                <!-- CallumsCapeHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'CallumsCapeHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-1225.4456,-168.48826)"
+                    >
+                        <title>CallumsCape</title>
+                    </path>
+                </a>
+                
+                <!-- ClahstraHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'ClahstraHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-458.18163,274.16815)"
+                    >
+                        <title>Clahstra</title>
+                    </path>
+                </a>
+                
+                <!-- ClansheadValleyHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'ClansheadValleyHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7238493,0,0,1.734796,-449.55596,-166.58586)"
+                    >
+                        <title>ClansheadValley</title>
+                    </path>
+                </a>
+                
+                <!-- DeadlandsHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'DeadlandsHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-841.29298,275.80956)"
+                    >
+                        <title>Deadlands</title>
+                    </path>
+                </a>
+                
+                <!-- DrownedValeHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'DrownedValeHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-649.86982,384.96769)"
+                    >
+                        <title>DrownedVale</title>
+                    </path>
+                </a>
+                
+                <!-- EndlessShoreHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'EndlessShoreHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.709071,0,0,1.7680065,-239.74358,379.39074)"
+                    >
+                        <title>EndlessShore</title>
+                    </path>
+                </a>
+                
+                <!-- FarranacCoastHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'FarranacCoastHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7254111,0,0,1.7286632,-1409.7245,169.24054)"
+                    >
+                        <title>FarranacCoast</title>
+                    </path>
+                </a>
+                
+                <!-- FingersHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'FingersHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,116.59431,384.97588)"
+                    >
+                        <title>Fingers</title>
+                    </path>
+                </a>
+                
+                <!-- FishermansRowHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'FishermansRowHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-1607.6837,273.87262)"
+                    >
+                        <title>FishermansRow</title>
+                    </path>
+                </a>
+                
+                <!-- GodcroftsHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'GodcroftsHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-74.701788,49.639816)"
+                    >
+                        <title>Godcrofts</title>
+                    </path>
+                </a>
+                
+                <!-- GreatMarchHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'GreatMarchHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-840.09967,718.70459)"
+                    >
+                        <title>GreatMarch</title>
+                    </path>
+                </a>
+                
+                <!-- GutterHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'GutterHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7577251,-1609.9913,49.043384)"
+                    >
+                        <title>Gutter</title>
+                    </path>
+                </a>
+                
+                <!-- HeartlandsHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'HeartlandsHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7434056,0,0,1.7475518,-1047.365,607.54646)"
+                    >
+                        <title>Heartlands</title>
+                    </path>
+                </a>
+                
+                <!-- HowlCountyHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'HowlCountyHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-649.52202,-280.5699)"
+                    >
+                        <title>HowlCounty</title>
+                    </path>
+                </a>
+                
+                <!-- KalokaiHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'KalokaiHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-840.9287,941.94834)"
+                    >
+                        <title>Kalokai</title>
+                    </path>
+                </a>
+                
+                <!-- KingsCageHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'KingsCageHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7377372,0,0,1.7287207,-1233.4418,279.66211)"
+                    >
+                        <title>KingsCage</title>
+                    </path>
+                </a>
+                
+                <!-- KuuraStrandHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'KuuraStrandHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7356191,0,0,1.733539,-1615.6764,-166.04363)"
+                    >
+                        <title>KuuraStrand</title>
+                    </path>
+                </a>
+                
+                <!-- LinnMercyHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'LinnMercyHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-1032.3657,163.51175)"
+                    >
+                        <title>LinnMercy</title>
+                    </path>
+                </a>
+                
+                <!-- LochMorHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'LochMorHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7344755,0,0,1.7362531,-1037.0418,387.8942)"
+                    >
+                        <title>LochMor</title>
+                    </path>
+                </a>
+                
+                <!-- LykosIsleHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'LykosIsleHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,116.37813,162.96769)"
+                    >
+                        <title>LykosIsle</title>
+                    </path>
+                </a>
+                
+                <!-- MarbanHollowHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'MarbanHollowHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7348962,0,0,1.7305441,-654.84129,168.04683)"
+                    >
+                        <title>MarbanHollow</title>
+                    </path>
+                </a>
+                
+                <!-- MoorsHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'MoorsHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.711644,0,0,1.7287207,-1009.7877,-52.074794)"
+                    >
+                        <title>Moors</title>
+                    </path>
+                </a>
+                
+                <!-- MorgensCrossingHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'MorgensCrossingHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-266.66183,-60.360184)"
+                    >
+                        <title>MorgensCrossing</title>
+                    </path>
+                </a>
+                
+                <!-- NevishLineHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'NevishLineHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-1417.4538,-57.864278)"
+                    >
+                        <title>NevishLine</title>
+                    </path>
+                </a>
+                
+                <!-- OarbreakerIslesHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'OarbreakerIslesHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-1799.4665,387.87562)"
+                    >
+                        <title>OarbreakerIsles</title>
+                    </path>
+                </a>
+                
+                <!-- OlavisWakeHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'OlavisWakeHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-1993.3011,52.357927)"
+                    >
+                        <title>OlavisWake</title>
+                    </path>
+                </a>
+                
+                <!-- OnyxHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'OnyxHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7175162,0,0,1.7396434,-56.797935,720.37281)"
+                    >
+                        <title>Onyx</title>
+                    </path>
+                </a>
+                
+                <!-- OriginHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'OriginHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-1415.3447,609.54055)"
+                    >
+                        <title>Origin</title>
+                    </path>
+                </a>
+                
+                <!-- PalantineBermHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'PalantineBermHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-1800.1822,164.55774)"
+                    >
+                        <title>PalantineBerm</title>
+                    </path>
+                </a>
+                
+                <!-- PariPeakHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'PariPeakHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7289763,-1802.9913,-53.014526)"
+                    >
+                        <title>PariPeak</title>
+                    </path>
+                </a>
+                
+                <!-- PipersEnclaveHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'PipersEnclaveHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,309.37744,495.53645)"
+                    >
+                        <title>PipersEnclave</title>
+                    </path>
+                </a>
+                
+                <!-- ReachingTrailHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'ReachingTrailHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7246943,0,0,1.7437877,-833.78954,-168.13751)"
+                    >
+                        <title>ReachingTrail</title>
+                    </path>
+                </a>
+                
+                <!-- ReaversPassHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'ReaversPassHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7267853,0,0,1.7270971,-260.52374,614.11289)"
+                    >
+                        <title>ReaversPass</title>
+                    </path>
+                </a>
+                
+                <!-- RedRiverHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'RedRiverHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-1032.0086,828.62047)"
+                    >
+                        <title>RedRiver</title>
+                    </path>
+                </a>
+                
+                <!-- SableportHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'SableportHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7181673,0,0,1.7324869,-1209.0148,500.54656)"
+                    >
+                        <title>Sableport</title>
+                    </path>
+                </a>
+                
+                <!-- ShackledChasmHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'ShackledChasmHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7179282,0,0,1.7270971,-633.11007,613.0984)"
+                    >
+                        <title>ShackledChasm</title>
+                    </path>
+                </a>
+                
+                <!-- SpeakingWoodsHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'SpeakingWoodsHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-1034.0778,-279.99235)"
+                    >
+                        <title>SpeakingWoods</title>
+                    </path>
+                </a>
+                
+                <!-- StemaLandingHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'StemaLandingHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-1606.8288,498.41075)"
+                    >
+                        <title>StemaLanding</title>
+                    </path>
+                </a>
+                
+                <!-- StlicanShelfHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'StlicanShelfHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-265.07781,162.59167)"
+                    >
+                        <title>StlicanShelf</title>
+                    </path>
+                </a>
+                
+                <!-- StonecradleHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'StonecradleHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7289763,-1225.3657,57.876187)"
+                    >
+                        <title>Stonecradle</title>
+                    </path>
+                </a>
+                
+                <!-- TempestIslandHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'TempestIslandHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-73.989702,273.26379)"
+                    >
+                        <title>TempestIsland</title>
+                    </path>
+                </a>
+                
+                <!-- TerminusHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'TerminusHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7489282,0,0,1.7475518,-479.78401,718.49602)"
+                    >
+                        <title>Terminus</title>
+                    </path>
+                </a>
+                
+                <!-- TyrantFoothillsHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'TyrantFoothillsHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,117.49724,606.52826)"
+                    >
+                        <title>TyrantFoothills</title>
+                    </path>
+                </a>
+                
+                <!-- UmbralWildwoodHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'UmbralWildwoodHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7234824,-840.83019,504.26713)"
+                    >
+                        <title>UmbralWildwood</title>
+                    </path>
+                </a>
+                
+                <!-- ViperPitHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'ViperPitHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-650.62187,-58.896049)"
+                    >
+                        <title>ViperPit</title>
+                    </path>
+                </a>
+                
+                <!-- WeatheredExpanseHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'WeatheredExpanseHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7348961,0,0,1.734796,-462.439,55.989958)"
+                    >
+                        <title>WeatheredExpanse</title>
+                    </path>
+                </a>
+                
+                <!-- WestgateHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'WestgateHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.711644,0,0,1.7478075,-1393.0566,385.39944)"
+                    >
+                        <title>Westgate</title>
+                    </path>
+                </a>
+                
+                <!-- WrestaHex -->
+                <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => 'WrestaHex']) }}"
+                   class="hex-link">
+                    <path
+                       class="hex-region"
+                       d="m 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z"
+                       transform="matrix(1.7312139,0,0,1.7475518,-75.285888,495.96769)"
+                    >
+                        <title>Wresta</title>
+                    </path>
+                </a>
+                
+            </svg>
