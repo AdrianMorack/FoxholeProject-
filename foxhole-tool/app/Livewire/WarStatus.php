@@ -72,17 +72,19 @@ class WarStatus extends Component
                 'total_casualties' => $reports->sum('colonial_casualties') + $reports->sum('warden_casualties'),
                 'active_maps' => \App\Models\MapIcon::where('shard', $shard)->where('war_id', $warId)->distinct('map_name')->count('map_name'),
                 'total_structures' => \App\Models\MapIcon::where('shard', $shard)->where('war_id', $warId)->count(),
-                // Victory points: ANY structure with isVictoryBase flag (bit 1 set), regardless of icon type
+                // Victory points: T3 Town Halls (type 58) with victory flag + 1
                 'victory_points_warden' => \App\Models\MapIcon::where('shard', $shard)
                     ->where('war_id', $warId)
                     ->where('team_id', 'WARDENS')
-                    ->whereRaw('(flags & 1) != 0') // Check isVictoryBase flag using != 0 instead of = 1
-                    ->count(),
+                    ->where('icon_type', 58)
+                    ->whereRaw('(flags & 1) != 0')
+                    ->count() + 1,
                 'victory_points_colonial' => \App\Models\MapIcon::where('shard', $shard)
                     ->where('war_id', $warId)
                     ->where('team_id', 'COLONIALS')
-                    ->whereRaw('(flags & 1) != 0') // Check isVictoryBase flag using != 0 instead of = 1
-                    ->count(),
+                    ->where('icon_type', 58)
+                    ->whereRaw('(flags & 1) != 0')
+                    ->count() + 1,
                 // All town bases (not just victory points)
                 'warden_town_bases' => \App\Models\MapIcon::where('shard', $shard)->where('war_id', $warId)->where('team_id', 'WARDENS')->whereIn('icon_type', [56, 57, 58])->count(),
                 'colonial_town_bases' => \App\Models\MapIcon::where('shard', $shard)->where('war_id', $warId)->where('team_id', 'COLONIALS')->whereIn('icon_type', [56, 57, 58])->count(),
