@@ -60,9 +60,14 @@ class WarStatus extends Component
             $warState = \App\Models\WarState::where('shard', $shard)->latest()->first();
             $warId = $warState?->war_id;
             
-            // Get latest map reports for this shard
+            // Get latest map report per map (only one per map to avoid counting duplicates)
             $reports = \App\Models\MapReport::where('shard', $shard)
-                ->orderBy('fetched_at', 'desc')
+                ->whereIn('id', function($query) use ($shard) {
+                    $query->select(\DB::raw('MAX(id)'))
+                        ->from('map_reports')
+                        ->where('shard', $shard)
+                        ->groupBy('map_name', 'shard');
+                })
                 ->get();
             
             return [

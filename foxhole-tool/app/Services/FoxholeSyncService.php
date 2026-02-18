@@ -115,15 +115,16 @@ class FoxholeSyncService
         }
 
         // Create new report entry
-        MapReport::create([
-            'map_name' => $map, // which map this report is for
-            'shard' => $shard,
-            'total_enlistments' => $data['totalEnlistments'] ?? 0,
-            'colonial_casualties' => $data['colonialCasualties'] ?? 0,
-            'warden_casualties' => $data['wardenCasualties'] ?? 0,
-            'day_of_war' => $data['dayOfWar'] ?? 0,
-            'fetched_at' => now(), // store when we fetched this
-        ]);
+        MapReport::updateOrCreate(
+            ['map_name' => $map, 'shard' => $shard], // unique key
+            [
+                'total_enlistments' => $data['totalEnlistments'] ?? 0,
+                'colonial_casualties' => $data['colonialCasualties'] ?? 0,
+                'warden_casualties' => $data['wardenCasualties'] ?? 0,
+                'day_of_war' => $data['dayOfWar'] ?? 0,
+                'fetched_at' => now(), // store when we fetched this
+            ]
+        );
 
         $this->info("War report synced for map: $map");
     }
