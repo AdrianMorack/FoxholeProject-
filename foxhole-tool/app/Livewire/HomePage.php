@@ -45,6 +45,6 @@ class HomePage extends Component
     public function render()
     {
         return view('livewire.home-page')
-            ->layout('layouts.app', ['title' => 'Foxhole War Tracker']);
+            ->layout('layouts.app', ['title' => 'Allied Command']);
     }
 }

@@ -39,6 +39,6 @@ class MapList extends Component
     public function render()
     {
         return view('livewire.map-list')
-            ->layout('layouts.app', ['title' => 'War Maps']);
+            ->layout('layouts.app', ['title' => 'Tactical War Map']);
     }
 }

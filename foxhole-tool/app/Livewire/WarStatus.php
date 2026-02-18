@@ -17,6 +17,7 @@ class WarStatus extends Component
      */
     public $data; // Holds the current war status data fetched from the Foxhole API
     public $stats; // Additional statistics from map reports
+    public $maps; // Map data for the table display
 
     /**
      * ====== Component render ======
@@ -24,8 +25,8 @@ class WarStatus extends Component
      */
     public function render()
     {
-        return view('livewire.war-status') // Blade view file: resources/views/livewire/war-status.blade.php
-            ->layout('layouts.app', ['title' => 'War Status']); // Uses app layout and sets page title
+        return view('livewire.war-status')
+            ->layout('layouts.app', ['title' => 'Operational Status']);
     }
 
     /**
@@ -70,10 +71,35 @@ class WarStatus extends Component
                 'warden_casualties' => $reports->sum('warden_casualties'),
                 'total_casualties' => $reports->sum('colonial_casualties') + $reports->sum('warden_casualties'),
                 'active_maps' => \App\Models\MapIcon::where('shard', $shard)->where('war_id', $warId)->distinct('map_name')->count('map_name'),
-                'total_structures' => \App\Models\MapIcon::where('shard', $shard)->where('war_id', $warId)->whereIn('icon_type', [56, 57, 58])->count(),
-                'victory_points_warden' => \App\Models\MapIcon::where('shard', $shard)->where('war_id', $warId)->where('team_id', 'WARDENS')->whereIn('icon_type', [56, 57, 58])->whereRaw('(flags & 1) = 1')->count(),
-                'victory_points_colonial' => \App\Models\MapIcon::where('shard', $shard)->where('war_id', $warId)->where('team_id', 'COLONIALS')->whereIn('icon_type', [56, 57, 58])->whereRaw('(flags & 1) = 1')->count(),
+                'total_structures' => \App\Models\MapIcon::where('shard', $shard)->where('war_id', $warId)->count(),
+                // Victory points: ANY structure with isVictoryBase flag (bit 1 set), regardless of icon type
+                'victory_points_warden' => \App\Models\MapIcon::where('shard', $shard)
+                    ->where('war_id', $warId)
+                    ->where('team_id', 'WARDENS')
+                    ->whereRaw('(flags & 1) != 0') // Check isVictoryBase flag using != 0 instead of = 1
+                    ->count(),
+                'victory_points_colonial' => \App\Models\MapIcon::where('shard', $shard)
+                    ->where('war_id', $warId)
+                    ->where('team_id', 'COLONIALS')
+                    ->whereRaw('(flags & 1) != 0') // Check isVictoryBase flag using != 0 instead of = 1
+                    ->count(),
+                // All town bases (not just victory points)
+                'warden_town_bases' => \App\Models\MapIcon::where('shard', $shard)->where('war_id', $warId)->where('team_id', 'WARDENS')->whereIn('icon_type', [56, 57, 58])->count(),
+                'colonial_town_bases' => \App\Models\MapIcon::where('shard', $shard)->where('war_id', $warId)->where('team_id', 'COLONIALS')->whereIn('icon_type', [56, 57, 58])->count(),
             ];
         });
+        
+        // Get map data for the table
+        $this->maps = \App\Models\Map::where('shard', $shard)
+            ->withCount([
+                'icons as warden_count' => function ($query) {
+                    $query->where('team_id', 'WARDENS');
+                },
+                'icons as colonial_count' => function ($query) {
+                    $query->where('team_id', 'COLONIALS');
+                },
+                'icons as total_structures'
+            ])
+            ->get();
     }
 }

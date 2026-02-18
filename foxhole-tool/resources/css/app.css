@@ -23,6 +23,26 @@
     --color-zinc-900: #171717;
     --color-zinc-950: #0a0a0a;
 
+    /* Military theme colors */
+    --color-military-bg-primary: #1a1f1a;
+    --color-military-bg-secondary: #0f140f;
+    --color-military-bg-tertiary: #1a2520;
+    --color-military-text-primary: #e8e8d5;
+    --color-military-text-muted: #8b9d83;
+    --color-military-text-subtle: #a8b8a0;
+    --color-military-border-green: #4a7c59;
+    --color-military-border-blue: #3a5a7c;
+    --color-military-border-tan: #7c6a3a;
+    --color-military-accent-green: #5a9c69;
+    --color-military-accent-blue: #4a7a9c;
+    --color-military-accent-gold: #ffd700;
+    --color-military-bg-green: #1a4a2a;
+    --color-military-bg-blue: #1a3a4a;
+    --color-military-bg-tan: #4a3a1a;
+    --color-military-bg-green-hover: #2a5a3a;
+    --color-military-bg-blue-hover: #2a4a5a;
+    --color-military-grid: #2a3a2a;
+
     --color-accent: var(--color-neutral-800);
     --color-accent-content: var(--color-neutral-800);
     --color-accent-foreground: var(--color-white);

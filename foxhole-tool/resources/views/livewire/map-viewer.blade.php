@@ -1,17 +1,18 @@
 <div class="space-y-4">
     <!-- Header with Back Button -->
     <div class="flex items-center gap-3">
-        <a href="{{ route('map.list', ['shard' => session('foxhole_shard', 'baker')]) }}" wire:navigate class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white text-sm rounded-lg transition-colors border border-slate-700">
+        <x-ui.button href="{{ route('map.list', ['shard' => session('foxhole_shard', 'baker')]) }}" variant="outline" size="sm" class="gap-2">
             <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
             </svg>
             Back
-        </a>
+        </x-ui.button>
         <h1 class="text-xl font-bold text-white">{{ str_replace('Hex', ' Hex', $selectedMap) }}</h1>
     </div>
 
     <!-- Map Container with proper background -->
-    <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg p-6 border border-slate-700 shadow-xl">
+    <x-ui.card class="border-slate-700">
+        <x-ui.card-content class="p-6">
         <div id="map-root" class="relative w-full mx-auto" style="max-width: 800px;">
             <!-- Root container: centers map on page, max width 800px -->
 
@@ -64,7 +65,8 @@
                 <!-- Each town/hex becomes an icon. x and y are normalized 0-1 coordinates. -->
             </div>
         </div>
-    </div>
+        </x-ui.card-content>
+    </x-ui.card>
 
     <script>
         function positionMapIcons() {
