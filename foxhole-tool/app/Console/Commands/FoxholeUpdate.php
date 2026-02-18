@@ -62,6 +62,10 @@ class FoxholeUpdate extends Command
             $this->info("✓ Shard {$shard} synced successfully\n");
         }
 
+        // Clear application cache to ensure fresh data is displayed
+        \Illuminate\Support\Facades\Cache::flush();
+        $this->info('Cache cleared');
+
         // Print a message in the console so we know all syncs completed
         $this->info('All Foxhole data synced');
 

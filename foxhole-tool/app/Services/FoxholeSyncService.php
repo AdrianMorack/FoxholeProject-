@@ -67,7 +67,7 @@ class FoxholeSyncService
         }
 
         // Update or insert war record
-        WarState::updateOrCreate(
+        $warState = WarState::updateOrCreate(
             ['war_id' => $data['warId'], 'shard' => $shard], // look up by war_id AND shard
             [
                 'war_number' => $data['warNumber'] ?? null, // war # if any
@@ -80,6 +80,9 @@ class FoxholeSyncService
                 'short_required_victory_towns' => $data['shortRequiredVictoryTowns'] ?? null,
             ]
         );
+        
+        // Force update the timestamp even if data hasn't changed
+        $warState->touch();
 
         $this->info("War state synced."); // log it
     }

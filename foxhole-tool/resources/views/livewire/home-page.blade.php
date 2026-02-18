@@ -111,7 +111,7 @@
 
     <!-- Footer Info -->
     <div class="text-center text-gray-500 text-sm py-4">
-        <p>Last updated: {{ $stats['last_updated'] }}</p>
+        <p>Last updated: {{ $stats['last_updated_at'] ? $stats['last_updated_at']->diffForHumans() : 'Never' }}</p>
         <p class="mt-1">Data refreshed every 30 minutes</p>
     </div>
 </div>
