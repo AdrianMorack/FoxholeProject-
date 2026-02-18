@@ -83,7 +83,7 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <x-ui.stat-box 
-                            label="Warden Victory Points" 
+                            label="ctory Points" 
                             :value="$stats['victory_points_warden'] ?? 0"
                             class="border-blue-500/30 bg-blue-900/10"
                         >
@@ -91,7 +91,7 @@
                         </x-ui.stat-box>
 
                         <x-ui.stat-box 
-                            label="Colonial Victory Points" 
+                            label="tory Points" 
                             :value="$stats['victory_points_colonial'] ?? 0"
                             class="border-green-500/30 bg-green-900/10"
                         >

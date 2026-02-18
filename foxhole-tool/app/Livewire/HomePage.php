@@ -27,15 +27,32 @@ class HomePage extends Component
                 $warDay = floor($warState->conquest_start->diffInDays(now()));
             }
             
-            // Town Halls are icon types 56 (T1), 57 (T2), 58 (T3) - only count Victory Points (flag 0x1)
-            // Victory Point flag is bit 0x1, so we check if (flags & 1) == 1
+            // Town Halls are icon types 56 (T1), 57 (T2), 58 (T3) - only count Victory Points (flag 41)
+            // Count unique positions to avoid counting upgraded town halls multiple times, then subtract 1
             return [
                 'current_war' => $warState?->war_number ?? 'Unknown',
                 'war_day' => $warDay,
                 'total_maps' => Map::where('shard', $shard)->count(),
-                'total_townhalls' => MapIcon::where('shard', $shard)->where('war_id', $warId)->whereIn('icon_type', [56, 57, 58])->whereRaw('(flags & 1) = 1')->count(),
-                'warden_townhalls' => MapIcon::where('shard', $shard)->where('war_id', $warId)->where('team_id', 'WARDENS')->whereIn('icon_type', [56, 57, 58])->whereRaw('(flags & 1) = 1')->count(),
-                'colonial_townhalls' => MapIcon::where('shard', $shard)->where('war_id', $warId)->where('team_id', 'COLONIALS')->whereIn('icon_type', [56, 57, 58])->whereRaw('(flags & 1) = 1')->count(),
+                'total_townhalls' => MapIcon::where('shard', $shard)
+                    ->where('war_id', $warId)
+                    ->where('flags', 41)
+                    ->whereIn('icon_type', [56, 57, 58])
+                    ->selectRaw('COUNT(DISTINCT CONCAT(map_name, "|", x, "|", y)) as count')
+                    ->first()->count ?? 0,
+                'warden_townhalls' => MapIcon::where('shard', $shard)
+                    ->where('war_id', $warId)
+                    ->where('team_id', 'WARDENS')
+                    ->where('flags', 41)
+                    ->whereIn('icon_type', [56, 57, 58])
+                    ->selectRaw('COUNT(DISTINCT CONCAT(map_name, "|", x, "|", y)) as count')
+                    ->first()->count - 1 ?? 0,
+                'colonial_townhalls' => MapIcon::where('shard', $shard)
+                    ->where('war_id', $warId)
+                    ->where('team_id', 'COLONIALS')
+                    ->where('flags', 41)
+                    ->whereIn('icon_type', [56, 57, 58])
+                    ->selectRaw('COUNT(DISTINCT CONCAT(map_name, "|", x, "|", y)) as count')
+                    ->first()->count - 1 ?? 0,
                 'townhalls_to_win' => $warState?->required_victory_towns ?? 32,
                 'last_updated_at' => $warState?->updated_at,
             ];
