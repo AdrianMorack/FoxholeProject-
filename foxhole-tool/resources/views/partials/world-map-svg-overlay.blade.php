@@ -6,25 +6,31 @@
                 $colonialPct = $map['colonial_percent'] ?? 0;
                 $wardenPct = $map['warden_percent'] ?? 0;
                 $mapId = $map['name'];
+                
+                // Adjust this value to change hex color opacity (0.0 - 1.0)
+                $hexOpacity = 0.35;
+                $neutralOpacity = 0.18;
             @endphp
             <linearGradient id="grad-{{ $mapId }}" x1="0%" y1="100%" x2="0%" y2="0%">
-                {{-- Flat colors based on majority control --}}
-                @if($colonialPct > $wardenPct)
-                    {{-- Colonial majority: muted green --}}
-                    <stop offset="0%" style="stop-color:rgba(22, 101, 52, 0.22);stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:rgba(22, 101, 52, 0.22);stop-opacity:1" />
-                @elseif($wardenPct > $colonialPct)
-                    {{-- Warden majority: muted blue --}}
-                    <stop offset="0%" style="stop-color:rgba(30, 64, 175, 0.22);stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:rgba(30, 64, 175, 0.22);stop-opacity:1" />
-                @elseif($colonialPct > 0 || $wardenPct > 0)
-                    {{-- Contested: neutral military green --}}
-                    <stop offset="0%" style="stop-color:rgba(74, 124, 89, 0.18);stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:rgba(74, 124, 89, 0.18);stop-opacity:1" />
+                {{-- Bottom to top: Colonial percentage from bottom, Warden from top --}}
+                @if($colonialPct > 0 && $wardenPct > 0)
+                    {{-- Both factions present: show gradient split --}}
+                    <stop offset="0%" style="stop-color:rgba(22, 101, 52, {{ $hexOpacity }});stop-opacity:1" />
+                    <stop offset="{{ $colonialPct }}%" style="stop-color:rgba(22, 101, 52, {{ $hexOpacity }});stop-opacity:1" />
+                    <stop offset="{{ $colonialPct }}%" style="stop-color:rgba(30, 64, 175, {{ $hexOpacity }});stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:rgba(30, 64, 175, {{ $hexOpacity }});stop-opacity:1" />
+                @elseif($colonialPct > 0)
+                    {{-- Colonial only: muted green --}}
+                    <stop offset="0%" style="stop-color:rgba(22, 101, 52, {{ $hexOpacity }});stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:rgba(22, 101, 52, {{ $hexOpacity }});stop-opacity:1" />
+                @elseif($wardenPct > 0)
+                    {{-- Warden only: muted blue --}}
+                    <stop offset="0%" style="stop-color:rgba(30, 64, 175, {{ $hexOpacity }});stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:rgba(30, 64, 175, {{ $hexOpacity }});stop-opacity:1" />
                 @else
                     {{-- No control: light gray --}}
-                    <stop offset="0%" style="stop-color:rgba(156, 163, 175, 0.12);stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:rgba(156, 163, 175, 0.12);stop-opacity:1" />
+                    <stop offset="0%" style="stop-color:rgba(156, 163, 175, {{ $neutralOpacity }});stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:rgba(156, 163, 175, {{ $neutralOpacity }});stop-opacity:1" />
                 @endif
             </linearGradient>
         @endforeach
