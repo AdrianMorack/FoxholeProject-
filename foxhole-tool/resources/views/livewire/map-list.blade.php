@@ -2,7 +2,7 @@
     <!-- Shard Selector -->
     <x-shard-selector />
     <x-back-button />
-    
+
     <div class="min-h-screen bg-[#1a1f1a] text-[#e8e8d5]">
     <!-- Background pattern -->
     <div class="absolute inset-0 opacity-10" style="background-image: repeating-linear-gradient(45deg, #2a4a2a 0px, #2a4a2a 10px, #1a3a1a 10px, #1a3a1a 20px);"></div>
@@ -13,13 +13,6 @@
             <div class="container mx-auto px-4 py-4">
                 <div class="flex items-center justify-between">
                     <div class="flex-1">
-                        <x-ui.button href="{{ route('home.page', ['shard' => session('foxhole_shard', 'baker')]) }}" variant="ghost" class="gap-2">
-                            <!-- ArrowLeft Icon -->
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                            </svg>
-                            RETURN TO HQ
-                        </x-ui.button>
                     </div>
                     <h1 class="text-2xl font-bold tracking-wider">TACTICAL WAR MAP</h1>
                     <div class="flex-1 flex items-center justify-end gap-2">
@@ -51,10 +44,7 @@
                             class="w-full h-auto object-contain block opacity-80"
                             onerror="this.onerror=null; this.src='{{ asset('images/FoxholeMap.png') }}'"
                         >
-                        
-                        <!-- Grid Overlay -->
-                        <div class="absolute inset-0 pointer-events-none" style="background-image: linear-gradient(rgba(74, 124, 89, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(74, 124, 89, 0.2) 1px, transparent 1px); background-size: 50px 50px;"></div>
-                        
+                                                
                         @include('partials.world-map-svg-overlay')
                     </div>
                 </x-ui.card-content>

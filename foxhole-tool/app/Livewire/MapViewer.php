@@ -24,8 +24,8 @@ class MapViewer extends Component
 
         // Assign default team colors
         $teamColors = [
-            'WARDENS'   => '#0000ff',
-            'COLONIALS' => '#00ff00',
+            'WARDENS'   => '#235682',
+            'COLONIALS' => '#506c4b',
             'NONE' => '#000000',
         ];
 
