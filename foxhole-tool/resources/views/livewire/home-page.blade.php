@@ -1,4 +1,8 @@
-<div class="min-h-screen bg-[#1a1f1a] text-[#e8e8d5] relative overflow-hidden">
+<div>
+    <!-- Shard Selector -->
+    <x-shard-selector />
+
+    <div class="min-h-screen bg-[#1a1f1a] text-[#e8e8d5] relative overflow-hidden">
     <!-- Background pattern -->
     <div class="absolute inset-0 opacity-10" style="background-image: repeating-linear-gradient(45deg, #2a4a2a 0px, #2a4a2a 10px, #1a3a1a 10px, #1a3a1a 20px);"></div>
     
@@ -114,4 +118,6 @@
             </div>
         </div>
     </div>
+    </div>
+</div>
 </div>

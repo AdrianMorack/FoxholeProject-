@@ -1,4 +1,8 @@
-<div class="min-h-screen bg-military-bg-primary">
+<div>
+    <!-- Shard Selector -->
+    <x-shard-selector />
+
+    <div class="min-h-screen bg-military-bg-primary">
     <!-- Military Header with Diagonal Stripes -->
     <div class="relative bg-gradient-to-r from-military-bg-secondary to-military-bg-primary border-b-4 border-military-border-green">
         <div class="absolute inset-0 opacity-10" style="background: repeating-linear-gradient(45deg, transparent, transparent 10px, #4a7c59 10px, #4a7c59 20px);"></div>
@@ -102,55 +106,7 @@
             </x-ui.card>
             @endif
 
-            <!-- Map Statistics Table -->
-            <x-ui.card>
-                <x-ui.card-header>
-                    <x-ui.card-title>Map Control</x-ui.card-title>
-                    <x-ui.card-description>Regional control and active maps</x-ui.card-description>
-                </x-ui.card-header>
-
-                <x-ui.card-content>
-                    <x-ui.table>
-                        <x-ui.table-header>
-                            <x-ui.table-row>
-                                <x-ui.table-head>Region</x-ui.table-head>
-                                <x-ui.table-head>Status</x-ui.table-head>
-                                <x-ui.table-head>Control</x-ui.table-head>
-                                <x-ui.table-head class="text-right">Structures</x-ui.table-head>
-                            </x-ui.table-row>
-                        </x-ui.table-header>
-                        <x-ui.table-body>
-                            @forelse($maps ?? [] as $map)
-                            <x-ui.table-row>
-                                <x-ui.table-cell class="font-medium">{{ $map->name }}</x-ui.table-cell>
-                                <x-ui.table-cell>
-                                    <x-ui.badge variant="success">Active</x-ui.badge>
-                                </x-ui.table-cell>
-                                <x-ui.table-cell>
-                                    <div class="flex gap-2">
-                                        <x-ui.badge variant="outline">W: {{ $map->warden_count ?? 0 }}</x-ui.badge>
-                                        <x-ui.badge variant="outline">C: {{ $map->colonial_count ?? 0 }}</x-ui.badge>
-                                    </div>
-                                </x-ui.table-cell>
-                                <x-ui.table-cell class="text-right font-bold">{{ $map->total_structures ?? 0 }}</x-ui.table-cell>
-                            </x-ui.table-row>
-                            @empty
-                            <x-ui.table-row>
-                                <x-ui.table-cell colspan="4" class="text-center text-military-text-secondary">
-                                    No map data available
-                                </x-ui.table-cell>
-                            </x-ui.table-row>
-                            @endforelse
-                        </x-ui.table-body>
-                    </x-ui.table>
-                </x-ui.card-content>
-
-                <x-ui.card-footer>
-                    <x-ui.button href="{{ route('map.list', ['shard' => session('foxhole_shard', 'baker')]) }}" variant="outline">
-                        View Full War Map
-                    </x-ui.button>
-                </x-ui.card-footer>
-            </x-ui.card>
+            
 
             <!-- Action Buttons -->
             <div class="flex gap-4 justify-center">
@@ -171,4 +127,6 @@
             </x-ui.card>
         @endif
     </div>
+    </div>
+</div>
 </div>

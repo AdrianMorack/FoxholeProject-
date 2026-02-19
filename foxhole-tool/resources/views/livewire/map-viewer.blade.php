@@ -1,4 +1,8 @@
-<div class="space-y-4">
+<div>
+    <!-- Shard Selector -->
+    <x-shard-selector />
+
+    <div class="space-y-4">
     <!-- Header with Back Button -->
     <div class="flex items-center gap-3">
         <x-ui.button href="{{ route('map.list', ['shard' => session('foxhole_shard', 'baker')]) }}" variant="outline" size="sm" class="gap-2">
@@ -112,4 +116,5 @@
             z-index: 1000 !important;
         }
     </style>
+    </div>
 </div>

@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component; // Base Livewire component class
 use Illuminate\Support\Facades\Cache; // Cache facade for caching API responses
 use Illuminate\Support\Facades\Log; // Log facade for logging errors
+use Illuminate\Support\Facades\DB; // DB facade for raw SQL expressions
 use App\Services\FoxholeApi; // Our API service with shard support
 
 class WarStatus extends Component
@@ -63,7 +64,7 @@ class WarStatus extends Component
             // Get latest map report per map (only one per map to avoid counting duplicates)
             $reports = \App\Models\MapReport::where('shard', $shard)
                 ->whereIn('id', function($query) use ($shard) {
-                    $query->select(\DB::raw('MAX(id)'))
+                    $query->select(DB::raw('MAX(id)'))
                         ->from('map_reports')
                         ->where('shard', $shard)
                         ->groupBy('map_name', 'shard');
