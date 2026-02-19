@@ -84,21 +84,9 @@ class WarStatus extends Component
                 'total_casualties' => $reports->sum('colonial_casualties') + $reports->sum('warden_casualties'),
                 'active_maps' => \App\Models\MapIcon::where('shard', $shard)->where('war_id', $warId)->distinct('map_name')->count('map_name'),
                 'total_structures' => \App\Models\MapIcon::where('shard', $shard)->where('war_id', $warId)->count(),
-                // Victory points: Unique VP positions (flag 41) for both Town Halls and Relic Bases
-                'victory_points_warden' => \App\Models\MapIcon::where('shard', $shard)
-                    ->where('war_id', $warId)
-                    ->where('team_id', 'WARDENS')
-                    ->where('flags', 41)
-                    ->whereIn('icon_type', [45, 46, 47, 56, 57, 58]) // Town Halls (56,57,58) + Relics (45,46,47)
-                    ->selectRaw('COUNT(DISTINCT CONCAT(map_name, "|", x, "|", y)) as count')
-                    ->first()->count ?? 0,
-                'victory_points_colonial' => \App\Models\MapIcon::where('shard', $shard)
-                    ->where('war_id', $warId)
-                    ->where('team_id', 'COLONIALS')
-                    ->where('flags', 41)
-                    ->whereIn('icon_type', [45, 46, 47, 56, 57, 58]) // Town Halls (56,57,58) + Relics (45,46,47)
-                    ->selectRaw('COUNT(DISTINCT CONCAT(map_name, "|", x, "|", y)) as count')
-                    ->first()->count ?? 0,
+                // Victory points: Get deduplicated VPs for accurate count
+                'victory_points_warden' => $this->getDeduplicatedVPCount($shard, $warId, 'WARDENS'),
+                'victory_points_colonial' => $this->getDeduplicatedVPCount($shard, $warId, 'COLONIALS'),
                 // All town bases and relics (not just victory points)
                 'warden_town_bases' => \App\Models\MapIcon::where('shard', $shard)->where('war_id', $warId)->where('team_id', 'WARDENS')->whereIn('icon_type', [45, 46, 47, 56, 57, 58])->count(),
                 'colonial_town_bases' => \App\Models\MapIcon::where('shard', $shard)->where('war_id', $warId)->where('team_id', 'COLONIALS')->whereIn('icon_type', [45, 46, 47, 56, 57, 58])->count(),
@@ -117,5 +105,31 @@ class WarStatus extends Component
                 'icons as total_structures'
             ])
             ->get();
+    }
+    
+    /**
+     * Get deduplicated victory point count for a team
+     * Handles cases where multiple icon entries exist at same location (upgrades, captures)
+     */
+    private function getDeduplicatedVPCount(string $shard, ?string $warId, string $teamId): int
+    {
+        if (!$warId) {
+            return 0;
+        }
+        
+        // Get all VP icons (isVictoryBase bit set)
+        $vpIcons = \App\Models\MapIcon::where('shard', $shard)
+            ->where('war_id', $warId)
+            ->whereRaw('flags & 1') // Bitwise check for isVictoryBase flag
+            ->whereIn('icon_type', [45, 46, 47, 56, 57, 58])
+            ->get(['map_name', 'x', 'y', 'team_id', 'updated_at']);
+        
+        // Deduplicate by location (keep most recent entry)
+        $deduplicated = $vpIcons
+            ->groupBy(fn($icon) => $icon->map_name . '|' . round($icon->x, 6) . '|' . round($icon->y, 6))
+            ->map(fn($group) => $group->sortByDesc('updated_at')->first())
+            ->where('team_id', $teamId);
+        
+        return $deduplicated->count();
     }
 }
