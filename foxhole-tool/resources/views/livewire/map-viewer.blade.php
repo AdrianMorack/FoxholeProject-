@@ -1,6 +1,7 @@
 <div>
     <!-- Shard Selector -->
     <x-shard-selector />
+    <x-back-button />
 
     <div class="space-y-4">
     <!-- Header with Back Button -->

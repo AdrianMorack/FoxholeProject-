@@ -1,6 +1,7 @@
 <div>
     <!-- Shard Selector -->
     <x-shard-selector />
+    <x-back-button />
 
     <div class="min-h-screen bg-military-bg-primary">
     <!-- Military Header with Diagonal Stripes -->
@@ -13,7 +14,7 @@
                 </svg>
                 <h1 class="text-4xl font-bold text-military-text-primary uppercase tracking-wider">Operational Status</h1>
             </div>
-            <p class="text-military-text-secondary uppercase text-sm tracking-wide">Live battlefield intelligence • Shard: {{ session('foxhole_shard', 'baker') }}</p>
+            <p class="text-military-text-primary text-military-text-secondary uppercase text-sm tracking-wide">Live battlefield intelligence • Shard: {{ session('foxhole_shard', 'baker') }}</p>
         </div>
     </div>
 
@@ -24,14 +25,16 @@
                 <x-ui.stat-box 
                     label="War Number" 
                     :value="'#' . ($data['warNumber'] ?? 'Unknown')"
+                    class="text-military-text-primary"
                 />
 
                 <x-ui.stat-box 
                     label="War Day" 
                     :value="isset($data['conquestStartTime']) ? floor((now()->timestamp * 1000 - $data['conquestStartTime']) / (1000 * 60 * 60 * 24)) : 'N/A'"
+                    class="text-military-text-primary"
                 />
 
-                <x-ui.stat-box label="Status">
+                <x-ui.stat-box label="Status" class="text-military-text-primary">
                     <x-slot name="value">
                         @if($data['winner'] ?? null)
                             <x-ui.badge variant="success">{{ $data['winner'] }}</x-ui.badge>
@@ -43,6 +46,7 @@
 
                 <x-ui.stat-box 
                     label="War Started" 
+                    class="text-military-text-primary"
                     :value="isset($data['conquestStartTime']) ? \Carbon\Carbon::createFromTimestampMs($data['conquestStartTime'])->format('M d, Y') : 'Unknown'"
                 >
                     {{ isset($data['conquestStartTime']) ? \Carbon\Carbon::createFromTimestampMs($data['conquestStartTime'])->diffForHumans() : '' }}
@@ -87,7 +91,7 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <x-ui.stat-box 
-                            label="ctory Points" 
+                            label="Victory Points" 
                             :value="$stats['victory_points_warden'] ?? 0"
                             class="border-blue-500/30 bg-blue-900/10"
                         >
@@ -95,7 +99,7 @@
                         </x-ui.stat-box>
 
                         <x-ui.stat-box 
-                            label="tory Points" 
+                            label="Victory Points" 
                             :value="$stats['victory_points_colonial'] ?? 0"
                             class="border-green-500/30 bg-green-900/10"
                         >
