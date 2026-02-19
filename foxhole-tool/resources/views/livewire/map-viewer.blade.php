@@ -6,12 +6,6 @@
     <div class="space-y-4">
     <!-- Header with Back Button -->
     <div class="flex items-center gap-3">
-        <x-ui.button href="{{ route('map.list', ['shard' => session('foxhole_shard', 'baker')]) }}" variant="outline" size="sm" class="gap-2">
-            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
-            </svg>
-            Back
-        </x-ui.button>
         <h1 class="text-xl font-bold text-white">{{ str_replace('Hex', ' Hex', $selectedMap) }}</h1>
     </div>
 
@@ -64,7 +58,7 @@
                          data-icon-type="{{ $town['icon_type'] }}"
                          data-icon-name="{{ $town['icon_name'] }}"
                          title="{{ $town['icon_name'] }} - {{ $town['team_id'] }}"
-                         style="position: absolute; width: 24px; height: 24px; background: {{ $town['team_color'] }}; border: 3px solid rgba(0,0,0,0.8); border-radius: 4px; cursor: pointer; transition: transform 0.2s; z-index: 999; box-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                         style="position: absolute; width: 24px; height: 24px; background: {{ $town['team_color'] }}; border: 3px solid rgba(0,0,0,0.8); border-radius: {{ $town['shape'] === 'circle' ? '50%' : '4px' }}; cursor: pointer; transition: transform 0.2s; z-index: 999; box-shadow: 0 2px 4px rgba(0,0,0,0.5);">
                     </div>
                 @endforeach
                 <!-- Each town/hex becomes an icon. x and y are normalized 0-1 coordinates. -->

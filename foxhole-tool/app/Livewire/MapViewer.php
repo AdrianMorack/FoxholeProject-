@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\MapIcon;
+use App\Models\WarState;
 use Illuminate\Support\Facades\Log;
 
 class MapViewer extends Component
@@ -16,38 +17,70 @@ class MapViewer extends Component
         $this->selectedMap = $mapName;
         $shard = session('foxhole_shard', 'baker');
         
-        // Fetch icons for the selected hex only from current shard
+        // Get the most recent war_id that actually has MapIcon data
+        $latestWarId = MapIcon::where('shard', $shard)
+            ->orderBy('updated_at', 'desc')
+            ->value('war_id');
+        
+        if (!$latestWarId) {
+            Log::warning("No MapIcon data found for shard: {$shard}");
+            $this->towns = [];
+            return;
+        }
+        
+        // Fetch Town Halls (56, 57, 58 = T1, T2, T3) and Relic Bases (45, 46, 47 = 3 designs)
         $icons = MapIcon::where('map_name', $this->selectedMap)
             ->where('shard', $shard)
-            ->whereIn('icon_type', [56, 57, 58])
-            ->get(['x', 'y', 'team_id', 'icon_type', 'map_name']);
+            ->where('war_id', $latestWarId)
+            ->whereIn('icon_type', [45, 46, 47, 56, 57, 58])
+            ->get(['x', 'y', 'team_id', 'icon_type', 'flags', 'updated_at']);
+        
+        // Remove duplicates at same location - keep only the most recently updated one
+        $uniqueIcons = $icons->groupBy(fn($icon) => round($icon->x, 6) . ',' . round($icon->y, 6))
+            ->map(function ($group) {
+                // If multiple icons at same location, return the most recently updated
+                return $group->sortByDesc('updated_at')->first();
+            })
+            ->values();
 
-        // Assign default team colors
+        Log::info("MapViewer loaded {$uniqueIcons->count()} icons for {$this->selectedMap} (war: {$latestWarId})");
+
+        // Team colors
         $teamColors = [
             'WARDENS'   => '#235682',
             'COLONIALS' => '#506c4b',
             'NONE' => '#000000',
         ];
 
-        $this->towns = $icons->map(function ($icon) use ($teamColors) {
+        $this->towns = $uniqueIcons->map(function ($icon) use ($teamColors) {
             $teamId = strtoupper($icon->team_id ?? 'NONE');
+            $iconType = $icon->icon_type ?? 0;
             
-            // Map icon types to names
-            $iconNames = [
-                56 => 'Town Hall',
-                57 => 'Relic Base',
-                58 => 'Keep',
-            ];
+            // Determine structure type and shape
+            // 56, 57, 58 = Town Hall Tier 1, 2, 3 (squares)
+            // 45, 46, 47 = Relic Base designs (circles)
+            $isRelic = in_array($iconType, [45, 46, 47]);
+            $isTownHall = in_array($iconType, [56, 57, 58]);
+            
+            // Determine name based on type
+            if ($isRelic) {
+                $name = 'Relic Base';
+            } elseif ($isTownHall) {
+                $tier = $iconType - 55; // 56->T1, 57->T2, 58->T3
+                $name = "Town Hall T{$tier}";
+            } else {
+                $name = 'Unknown';
+            }
             
             return [
-                'x' => isset($icon->x) ? (float)$icon->x : 0.5,
-                'y' => isset($icon->y) ? (float)$icon->y : 0.5,
-                'size' => 0.03,
+                'x' => (float)$icon->x,
+                'y' => (float)$icon->y,
                 'team_color' => $teamColors[$teamId] ?? '#ff0000',
                 'team_id' => $teamId,
-                'icon_type' => $icon->icon_type ?? 0,
-                'icon_name' => $iconNames[$icon->icon_type] ?? 'Unknown',
-                'map_name' => $icon->map_name ?? '',
+                'icon_type' => $iconType,
+                'icon_name' => $name,
+                'shape' => $isRelic ? 'circle' : 'square',
+                'flags' => $icon->flags ?? 0,
             ];
         })->toArray();
     }

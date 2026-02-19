@@ -1,6 +1,12 @@
 {{-- SVG Overlay for Interactive World Map Hexes --}}
 <svg class="absolute inset-0 w-full h-full" viewBox="0 0 2560 1554" preserveAspectRatio="xMidYMid meet" style="z-index: 10;">
     @php
+        // Create a lookup map for team data
+        $mapTeams = [];
+        foreach ($maps ?? [] as $map) {
+            $mapTeams[$map['name']] = $map['dominant_team'] ?? 0;
+        }
+        
         $hexRegions = [
             ['id' => 'AcrithiaHex', 'd' => 'm 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z', 'transform' => 'matrix(1.7002139,0,0,1.7424381,-612.16661,830.76598)'],
             ['id' => 'AllodsBightHex', 'd' => 'm 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z', 'transform' => 'matrix(1.7312139,0,0,1.7322108,-457.8699,500.8963)'],
@@ -73,11 +79,28 @@
             ];
             
             $displayName = $displayNames[$hex['id']] ?? str_replace('Hex', '', $hex['id']);
+            
+            // Get team control for this hex
+            $dominantTeam = $mapTeams[$hex['id']] ?? 0;
+            
+            // Set color based on team: 1=Warden(blue), 2=Colonial(green), 0=Neutral(gray)
+            $strokeColor = match($dominantTeam) {
+                1 => 'rgba(59, 130, 246, 0.9)',  // Blue for Wardens
+                2 => 'rgba(34, 197, 94, 0.9)',   // Green for Colonials
+                default => 'rgba(74, 124, 89, 0.8)',  // Default gray-green
+            };
+            
+            $fillColor = match($dominantTeam) {
+                1 => 'rgba(59, 130, 246, 0.25)',  // Blue fill for Wardens
+                2 => 'rgba(34, 197, 94, 0.25)',   // Green fill for Colonials
+                default => 'rgba(193, 193, 193, 0.25)',  // Default gray fill
+            };
         @endphp
         <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => $hex['id']]) }}"
            class="hex-link">
             <path
                class="hex-region"
+               style="fill: {{ $fillColor }}; stroke: {{ $strokeColor }}; stroke-width: 3;"
                d="{{ $hex['d'] }}"
                transform="{{ $hex['transform'] }}"
             >

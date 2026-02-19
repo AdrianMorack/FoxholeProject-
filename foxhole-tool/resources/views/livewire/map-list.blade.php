@@ -56,16 +56,12 @@
                 }
 
                 .hex-region {
-                    fill: rgba(74, 124, 89, 0.25);
-                    stroke: rgba(74, 124, 89, 0.8);
-                    stroke-width: 3;
                     transition: all 0.2s ease;
                 }
 
                 .hex-link:hover .hex-region {
-                    fill: rgba(74, 124, 89, 0.45);
-                    stroke: rgba(90, 156, 105, 1);
-                    stroke-width: 4;
+                    filter: brightness(1.3);
+                    stroke-width: 4 !important;
                 }
             </style>
             
