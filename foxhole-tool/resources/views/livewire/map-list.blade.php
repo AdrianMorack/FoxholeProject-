@@ -22,17 +22,10 @@
         </header>
 
         <!-- Main Content -->
-        <div class="container mx-auto px-4 py-8">
+        <div class="container mx-auto px-4 py-4">
             <!-- Map Display -->
-            <x-ui.card class="border-[#3a5a7c] mb-8">
-                <x-ui.card-header>
-                    <div class="flex items-center justify-between">
-                        <x-ui.card-title class="tracking-wider">THEATER OF OPERATIONS</x-ui.card-title>
-                        <x-ui.badge variant="outline" class="tracking-wider">
-                            REGIONS: {{ count($maps) }}
-                        </x-ui.badge>
-                    </div>
-                </x-ui.card-header>
+            <x-ui.card class="border-[#3a5a7c]">
+                
 
                 <x-ui.card-content>
                     <!-- Map Container -->

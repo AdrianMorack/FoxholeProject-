@@ -11,7 +11,7 @@
 
     <!-- Map Container with proper background -->
     <x-ui.card class="border-slate-700">
-        <x-ui.card-content class="p-6">
+        <x-ui.card-content class="p-4">
         <div id="map-root" class="relative w-full mx-auto" style="max-width: 800px;">
             <!-- Root container: centers map on page, max width 800px -->
 

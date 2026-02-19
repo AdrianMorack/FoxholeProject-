@@ -8,21 +8,23 @@
                 $mapId = $map['name'];
             @endphp
             <linearGradient id="grad-{{ $mapId }}" x1="0%" y1="100%" x2="0%" y2="0%">
-                {{-- Bottom to top: Colonial percentage from bottom, Warden from top --}}
-                @if($colonialPct > 0 && $wardenPct > 0)
-                    <stop offset="0%" style="stop-color:rgba(34, 197, 94, 0.4);stop-opacity:1" />
-                    <stop offset="{{ $colonialPct }}%" style="stop-color:rgba(34, 197, 94, 0.4);stop-opacity:1" />
-                    <stop offset="{{ $colonialPct }}%" style="stop-color:rgba(59, 130, 246, 0.4);stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:rgba(59, 130, 246, 0.4);stop-opacity:1" />
-                @elseif($colonialPct > 0)
-                    <stop offset="0%" style="stop-color:rgba(34, 197, 94, 0.4);stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:rgba(34, 197, 94, 0.4);stop-opacity:1" />
-                @elseif($wardenPct > 0)
-                    <stop offset="0%" style="stop-color:rgba(59, 130, 246, 0.4);stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:rgba(59, 130, 246, 0.4);stop-opacity:1" />
+                {{-- Flat colors based on majority control --}}
+                @if($colonialPct > $wardenPct)
+                    {{-- Colonial majority: muted green --}}
+                    <stop offset="0%" style="stop-color:rgba(22, 101, 52, 0.22);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:rgba(22, 101, 52, 0.22);stop-opacity:1" />
+                @elseif($wardenPct > $colonialPct)
+                    {{-- Warden majority: muted blue --}}
+                    <stop offset="0%" style="stop-color:rgba(30, 64, 175, 0.22);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:rgba(30, 64, 175, 0.22);stop-opacity:1" />
+                @elseif($colonialPct > 0 || $wardenPct > 0)
+                    {{-- Contested: neutral military green --}}
+                    <stop offset="0%" style="stop-color:rgba(74, 124, 89, 0.18);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:rgba(74, 124, 89, 0.18);stop-opacity:1" />
                 @else
-                    <stop offset="0%" style="stop-color:rgba(193, 193, 193, 0.25);stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:rgba(193, 193, 193, 0.25);stop-opacity:1" />
+                    {{-- No control: light gray --}}
+                    <stop offset="0%" style="stop-color:rgba(156, 163, 175, 0.12);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:rgba(156, 163, 175, 0.12);stop-opacity:1" />
                 @endif
             </linearGradient>
         @endforeach

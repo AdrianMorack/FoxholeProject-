@@ -7,21 +7,21 @@
     <!-- Military Header with Diagonal Stripes -->
     <div class="relative bg-gradient-to-r from-military-bg-secondary to-military-bg-primary border-b-4 border-military-border-green">
         <div class="absolute inset-0 opacity-10" style="background: repeating-linear-gradient(45deg, transparent, transparent 10px, #4a7c59 10px, #4a7c59 20px);"></div>
-        <div class="relative max-w-7xl mx-auto px-6 py-12">
-            <div class="flex items-center gap-4 mb-4">
-                <svg class="w-12 h-12 text-military-border-green" fill="currentColor" viewBox="0 0 24 24">
+        <div class="relative max-w-7xl mx-auto px-6 py-10">
+            <div class="flex items-center gap-3 mb-4">
+                <svg class="w-9 h-9 text-military-border-green" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
                 </svg>
-                <h1 class="text-4xl font-bold text-military-text-primary uppercase tracking-wider">Operational Status</h1>
+                <h1 class="text-3xl font-bold text-military-text-primary uppercase tracking-wider py-4">Operational Status</h1>
             </div>
-            <p class="text-military-text-primary text-military-text-secondary uppercase text-sm tracking-wide">Live battlefield intelligence • Shard: {{ session('foxhole_shard', 'baker') }}</p>
+            <p class="text-military-text-primary text-military-text-secondary uppercase text-sm tracking-wide mt-2">Live battlefield intelligence • Shard: {{ session('foxhole_shard', 'baker') }}</p>
         </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-6 py-8 space-y-8">
+    <div class="max-w-7xl mx-auto px-6 py-12 space-y-10">
         @if($data)
             <!-- Primary War Stats Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
                 <x-ui.stat-box 
                     label="War Number" 
                     :value="'#' . ($data['warNumber'] ?? 'Unknown')"
@@ -55,18 +55,18 @@
 
             <!-- Casualties Section -->
             @if($stats)
-            <x-ui.card>
-                <x-ui.card-header>
-                    <x-ui.card-title class="flex items-center gap-3">
-                        <svg class="w-7 h-7 text-military-border-green" fill="currentColor" viewBox="0 0 20 20">
+            <x-ui.card class="mb-12">
+                <x-ui.card-header class="py-8">
+                    <x-ui.card-title class="flex items-center gap-2">
+                        <svg class="w-6 h-6 text-military-border-green" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
                         </svg>
-                        War Statistics
+                        <span class="p-4 py-1">War Statistics</span>
                     </x-ui.card-title>
-                    <x-ui.card-description>Battlefield casualties and faction statistics</x-ui.card-description>
+                    <x-ui.card-description class="mt-3">Battlefield casualties and faction statistics</x-ui.card-description>
                 </x-ui.card-header>
 
-                <x-ui.card-content>
+                <x-ui.card-content class="">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <x-ui.stat-box 
                             label="Total Casualties" 
@@ -87,11 +87,11 @@
                         />
                     </div>
 
-                    <x-ui.separator class="my-6" />
+                    <x-ui.separator class="my-8" />
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <x-ui.stat-box 
-                            label="Victory Points" 
+                            label="Warden Victory Points" 
                             :value="$stats['victory_points_warden'] ?? 0"
                             class="border-blue-500/30 bg-blue-900/10"
                         >
@@ -99,7 +99,7 @@
                         </x-ui.stat-box>
 
                         <x-ui.stat-box 
-                            label="Victory Points" 
+                            label="Colonial Victory Points" 
                             :value="$stats['victory_points_colonial'] ?? 0"
                             class="border-green-500/30 bg-green-900/10"
                         >
@@ -109,18 +109,6 @@
                 </x-ui.card-content>
             </x-ui.card>
             @endif
-
-            
-
-            <!-- Action Buttons -->
-            <div class="flex gap-4 justify-center">
-                <x-ui.button href="{{ route('home.page', ['shard' => session('foxhole_shard', 'baker')]) }}" variant="outline">
-                    ← Back to Command
-                </x-ui.button>
-                <x-ui.button wire:click="$refresh">
-                    Refresh Data
-                </x-ui.button>
-            </div>
 
         @else
             <x-ui.card>
