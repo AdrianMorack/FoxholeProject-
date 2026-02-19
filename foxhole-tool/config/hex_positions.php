@@ -21,7 +21,7 @@ return [
     'ClahstraHex' => ['row' => 0, 'col' => 6],
     
     'ClansheadValleyHex' => ['row' => 1, 'col' => 0],
-    'DeadlandsHex' => ['row' => 1, 'col' => 1],
+    'DeadLandsHex' => ['row' => 1, 'col' => 1],
     'DrownedValeHex' => ['row' => 1, 'col' => 2],
     'EndlessShoreHex' => ['row' => 1, 'col' => 3],
     'FarranacCoastHex' => ['row' => 1, 'col' => 4],

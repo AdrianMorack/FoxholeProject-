@@ -1,10 +1,43 @@
 {{-- SVG Overlay for Interactive World Map Hexes --}}
 <svg class="absolute inset-0 w-full h-full" viewBox="0 0 2560 1554" preserveAspectRatio="xMidYMid meet" style="z-index: 10;">
+    <defs>
+        @foreach($maps ?? [] as $map)
+            @php
+                $colonialPct = $map['colonial_percent'] ?? 0;
+                $wardenPct = $map['warden_percent'] ?? 0;
+                $mapId = $map['name'];
+            @endphp
+            <linearGradient id="grad-{{ $mapId }}" x1="0%" y1="100%" x2="0%" y2="0%">
+                {{-- Bottom to top: Colonial percentage from bottom, Warden from top --}}
+                @if($colonialPct > 0 && $wardenPct > 0)
+                    <stop offset="0%" style="stop-color:rgba(34, 197, 94, 0.4);stop-opacity:1" />
+                    <stop offset="{{ $colonialPct }}%" style="stop-color:rgba(34, 197, 94, 0.4);stop-opacity:1" />
+                    <stop offset="{{ $colonialPct }}%" style="stop-color:rgba(59, 130, 246, 0.4);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:rgba(59, 130, 246, 0.4);stop-opacity:1" />
+                @elseif($colonialPct > 0)
+                    <stop offset="0%" style="stop-color:rgba(34, 197, 94, 0.4);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:rgba(34, 197, 94, 0.4);stop-opacity:1" />
+                @elseif($wardenPct > 0)
+                    <stop offset="0%" style="stop-color:rgba(59, 130, 246, 0.4);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:rgba(59, 130, 246, 0.4);stop-opacity:1" />
+                @else
+                    <stop offset="0%" style="stop-color:rgba(193, 193, 193, 0.25);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:rgba(193, 193, 193, 0.25);stop-opacity:1" />
+                @endif
+            </linearGradient>
+        @endforeach
+    </defs>
+    
     @php
         // Create a lookup map for team data
         $mapTeams = [];
         foreach ($maps ?? [] as $map) {
-            $mapTeams[$map['name']] = $map['dominant_team'] ?? 0;
+            $mapTeams[$map['name']] = [
+                'warden_percent' => $map['warden_percent'] ?? 0,
+                'colonial_percent' => $map['colonial_percent'] ?? 0,
+                'warden_count' => $map['warden_count'] ?? 0,
+                'colonial_count' => $map['colonial_count'] ?? 0,
+            ];
         }
         
         $hexRegions = [
@@ -16,7 +49,7 @@
             ['id' => 'CallumsCapeHex', 'd' => 'm 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z', 'transform' => 'matrix(1.7312139,0,0,1.7475518,-1225.4456,-168.48826)'],
             ['id' => 'ClahstraHex', 'd' => 'm 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z', 'transform' => 'matrix(1.7312139,0,0,1.7475518,-458.18163,274.16815)'],
             ['id' => 'ClansheadValleyHex', 'd' => 'm 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z', 'transform' => 'matrix(1.7238493,0,0,1.734796,-449.55596,-166.58586)'],
-            ['id' => 'DeadlandsHex', 'd' => 'm 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z', 'transform' => 'matrix(1.7312139,0,0,1.7475518,-841.29298,275.80956)'],
+            ['id' => 'DeadLandsHex', 'd' => 'm 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z', 'transform' => 'matrix(1.7312139,0,0,1.7475518,-841.29298,275.80956)'],
             ['id' => 'DrownedValeHex', 'd' => 'm 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z', 'transform' => 'matrix(1.7312139,0,0,1.7475518,-649.86982,384.96769)'],
             ['id' => 'EndlessShoreHex', 'd' => 'm 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z', 'transform' => 'matrix(1.709071,0,0,1.7680065,-239.74358,379.39074)'],
             ['id' => 'FarranacCoastHex', 'd' => 'm 1299.4177,287.716 -36.925,63.95594 h -73.8499 l -36.925,-63.95594 36.925,-63.95593 73.8499,0 z', 'transform' => 'matrix(1.7254111,0,0,1.7286632,-1409.7245,169.24054)'],
@@ -74,6 +107,7 @@
                 'MooringCountyHex' => 'Mooring County',
                 'OarbreakerHex' => 'Oarbreaker Isles',
                 'MarbanHollow' => 'Marban Hollow',
+                'DeadLandsHex' => 'Dead Lands',
                 'HomeRegionC' => 'Colonial Home Region',
                 'HomeRegionW' => 'Warden Home Region',
             ];
@@ -81,30 +115,40 @@
             $displayName = $displayNames[$hex['id']] ?? str_replace('Hex', '', $hex['id']);
             
             // Get team control for this hex
-            $dominantTeam = $mapTeams[$hex['id']] ?? 0;
+            $teamData = $mapTeams[$hex['id']] ?? null;
             
-            // Set color based on team: 1=Warden(blue), 2=Colonial(green), 0=Neutral(gray)
-            $strokeColor = match($dominantTeam) {
-                1 => 'rgba(59, 130, 246, 0.9)',  // Blue for Wardens
-                2 => 'rgba(34, 197, 94, 0.9)',   // Green for Colonials
-                default => 'rgba(74, 124, 89, 0.8)',  // Default gray-green
-            };
+            $wardenPct = $teamData['warden_percent'] ?? 0;
+            $colonialPct = $teamData['colonial_percent'] ?? 0;
+            $wardenCount = $teamData['warden_count'] ?? 0;
+            $colonialCount = $teamData['colonial_count'] ?? 0;
             
-            $fillColor = match($dominantTeam) {
-                1 => 'rgba(59, 130, 246, 0.25)',  // Blue fill for Wardens
-                2 => 'rgba(34, 197, 94, 0.25)',   // Green fill for Colonials
-                default => 'rgba(193, 193, 193, 0.25)',  // Default gray fill
-            };
+            // Determine stroke color based on majority
+            if ($wardenPct > $colonialPct) {
+                $strokeColor = 'rgba(59, 130, 246, 0.9)';  // Blue for Wardens
+            } elseif ($colonialPct > $wardenPct) {
+                $strokeColor = 'rgba(34, 197, 94, 0.9)';   // Green for Colonials
+            } else {
+                $strokeColor = 'rgba(74, 124, 89, 0.8)';  // Neutral
+            }
+            
+            // Use gradient fill if we have data, otherwise default
+            $fillStyle = $teamData ? "url(#grad-{$hex['id']})" : 'rgba(193, 193, 193, 0.25)';
+            
+            // Create title with ownership info
+            $title = $displayName;
+            if ($wardenCount > 0 || $colonialCount > 0) {
+                $title .= "\nWardens: {$wardenCount} ({$wardenPct}%)\nColonials: {$colonialCount} ({$colonialPct}%)";
+            }
         @endphp
         <a href="{{ route('map-viewer', ['shard' => session('foxhole_shard', 'baker'), 'mapName' => $hex['id']]) }}"
            class="hex-link">
             <path
                class="hex-region"
-               style="fill: {{ $fillColor }}; stroke: {{ $strokeColor }}; stroke-width: 3;"
+               style="fill: {{ $fillStyle }}; stroke: {{ $strokeColor }}; stroke-width: 3;"
                d="{{ $hex['d'] }}"
                transform="{{ $hex['transform'] }}"
             >
-                <title>{{ $displayName }}</title>
+                <title>{{ $title }}</title>
             </path>
         </a>
     @endforeach
