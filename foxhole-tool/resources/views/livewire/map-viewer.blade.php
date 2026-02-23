@@ -38,6 +38,20 @@
                 </div>
             </div>
 
+            <!-- Offline shard notice -->
+            @if($shardOffline)
+            <div class="flex-shrink-0 max-w-5xl w-full mx-auto px-6 pb-2">
+                <div class="flex items-center gap-2 border border-yellow-600/50 bg-yellow-900/20 px-3 py-2">
+                    <svg class="w-4 h-4 text-yellow-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                    </svg>
+                    <span class="text-xs text-yellow-400 tracking-wide uppercase">
+                        Shard <strong>{{ strtoupper(session('foxhole_shard', 'baker')) }}</strong> is currently offline
+                    </span>
+                </div>
+            </div>
+            @endif
+
             <!-- Map: fixed height so it never causes scrolling -->
             <!-- Title bar ~37px + sector name ~52px + top/bottom padding ~32px = ~121px -->
             <div class="flex-shrink-0 flex items-center justify-center px-6 pb-4" style="height: calc(100vh - 121px);">
@@ -75,41 +89,40 @@
 
                         <!-- Map icons -->
                         @foreach($towns as $town)
+                            @php
+                                // Label colours per faction
+                                $labelBg = match($town['team_id']) {
+                                    'WARDENS'   => '#1a3d5c',
+                                    'COLONIALS' => '#3a5c35',
+                                    default     => '#888888',
+                                };
+                                $labelBorder = match($town['team_id']) {
+                                    'WARDENS'   => '#4488cc',
+                                    'COLONIALS' => '#4a7c59',
+                                    default     => '#555555',
+                                };
+                                $labelText = match($town['team_id']) {
+                                    'WARDENS'   => '#ffffff',
+                                    'COLONIALS' => '#000000',
+                                    default     => '#000000',
+                                };
+                            @endphp
                             <div class="map-icon"
                                  data-x="{{ $town['x'] }}"
                                  data-y="{{ $town['y'] }}"
                                  data-team-color="{{ $town['team_color'] }}"
                                  data-icon-type="{{ $town['icon_type'] }}"
                                  data-icon-name="{{ $town['icon_name'] }}"
-                                 title="{{ $town['icon_name'] }} — {{ $town['team_id'] }}"
-                                 style="position: absolute; width: 22px; height: 22px; background: {{ $town['team_color'] }}; border: 2px solid rgba(0,0,0,0.9); border-radius: {{ $town['shape'] === 'circle' ? '50%' : '3px' }}; cursor: pointer; transition: transform 0.15s; z-index: 999; box-shadow: 0 0 6px {{ $town['team_color'] }}55, 0 2px 4px rgba(0,0,0,0.8);">
+                                 title="{{ $town['icon_name'] }} ({{ $town['type_name'] }}) — {{ $town['team_id'] }}"
+                                 style="position: absolute; display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.15s; z-index: 999;">
+                                <!-- Name label -->
+                                <div class="icon-label" style="background: {{ $labelBg }}; border: 1px solid {{ $labelBorder }}; color: {{ $labelText }}; font-size: 9px; font-weight: 700; letter-spacing: 0.05em; white-space: nowrap; padding: 1px 4px; margin-bottom: 3px; box-shadow: 0 1px 3px rgba(0,0,0,0.7); pointer-events: none; transition: transform 0.15s;">
+                                    {{ $town['icon_name'] }}
+                                </div>
+                                <!-- Icon dot -->
+                                <div class="icon-dot" style="width: 22px; height: 22px; background: {{ $town['team_color'] }}; border: 2px solid rgba(0,0,0,0.9); border-radius: {{ $town['shape'] === 'circle' ? '50%' : '3px' }}; box-shadow: 0 0 6px {{ $town['team_color'] }}55, 0 2px 4px rgba(0,0,0,0.8); flex-shrink: 0;"></div>
                             </div>
                         @endforeach
-
-                        <!-- HUD: bottom-left legend -->
-                        <div class="absolute bottom-0 left-0 z-20 m-3 bg-[#0f140f]/85 backdrop-blur-sm border border-[#4a7c59]/40 px-3 py-2">
-                            <p class="text-[9px] tracking-[0.25em] text-[#4a7c59] uppercase mb-1.5">Legend</p>
-                            <div class="flex flex-col gap-1">
-                                <div class="flex items-center gap-1.5">
-                                    <span class="w-2.5 h-2.5 rounded-sm flex-shrink-0" style="background:#4488cc; box-shadow: 0 0 4px #4488cc88;"></span>
-                                    <span class="text-[10px] text-[#a8b8a0] tracking-wide uppercase">Warden</span>
-                                </div>
-                                <div class="flex items-center gap-1.5">
-                                    <span class="w-2.5 h-2.5 rounded-sm flex-shrink-0" style="background:#cc5544; box-shadow: 0 0 4px #cc554488;"></span>
-                                    <span class="text-[10px] text-[#a8b8a0] tracking-wide uppercase">Colonial</span>
-                                </div>
-                                <div class="flex items-center gap-1.5">
-                                    <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#666; box-shadow: 0 0 4px #66666655;"></span>
-                                    <span class="text-[10px] text-[#a8b8a0] tracking-wide uppercase">Neutral</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- HUD: top-right live indicator -->
-                        <div class="absolute top-0 right-0 z-20 m-3 flex items-center gap-1.5 bg-[#0f140f]/85 backdrop-blur-sm border border-[#4a7c59]/40 px-2.5 py-1.5">
-                            <span class="w-1.5 h-1.5 rounded-full bg-[#4a7c59] animate-pulse"></span>
-                            <span class="text-[9px] tracking-[0.2em] text-[#4a7c59] uppercase">Live</span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -136,9 +149,13 @@
             document.querySelectorAll('.map-icon').forEach((icon) => {
                 const x = parseFloat(icon.dataset.x) || 0;
                 const y = parseFloat(icon.dataset.y) || 0;
+                const dot = icon.querySelector('.icon-dot');
+                // Anchor the dot center to the coordinate; label floats above naturally
+                const dotHalf = dot ? dot.offsetHeight / 2 : 11;
+                const labelH  = dot ? (icon.offsetHeight - dot.offsetHeight) : 0;
                 icon.style.left = (offsetLeft + x * imgWidth) + 'px';
                 icon.style.top  = (offsetTop + y * imgHeight) + 'px';
-                icon.style.transform = 'translate(-50%, -50%)';
+                icon.style.transform = `translate(-50%, calc(-${labelH}px - ${dotHalf}px))`;
             });
         }
 
@@ -151,9 +168,14 @@
     </script>
 
     <style>
-        .map-icon:hover {
-            transform: translate(-50%, -50%) scale(1.5) !important;
-            z-index: 1000 !important;
+        .map-icon:hover .icon-dot {
+            transform: scale(1.5);
+        }
+        .map-icon:hover .icon-label {
+            transform: scale(1.1);
+        }
+        .icon-dot {
+            transition: transform 0.15s;
         }
     </style>
 </div>

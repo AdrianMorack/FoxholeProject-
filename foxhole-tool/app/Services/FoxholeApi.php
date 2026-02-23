@@ -97,4 +97,10 @@ class FoxholeApi
     {
         return $this->getWithEtag("/worldconquest/maps/{$map}/dynamic/public", "dynamic:{$map}");
     }
+
+    // Get static map data (text labels, resource nodes) — changes only between wars
+    public function staticMap(string $map): ?array
+    {
+        return $this->getWithEtag("/worldconquest/maps/{$map}/static", "static:{$map}");
+    }
 }

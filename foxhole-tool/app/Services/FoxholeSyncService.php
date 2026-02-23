@@ -3,7 +3,7 @@
 namespace App\Services; // service lives here
 
 // Bring in the models we’ll be saving to
-use App\Models\{WarState, Map as MapModel, MapReport, MapIcon};
+use App\Models\{WarState, Map as MapModel, MapReport, MapIcon, MapTextItem};
 // DB helper for transactions
 use Illuminate\Support\Facades\DB;
 // Carbon for date/timestamp handling
@@ -36,6 +36,12 @@ class FoxholeSyncService
                 $this->info("Failed to sync war report for $name: " . $e->getMessage());
             }
             
+            try {
+                $this->syncStatic($name, $shard);    // fetch & store location name labels
+            } catch (\Exception $e) {
+                $this->info("Failed to sync static data for $name: " . $e->getMessage());
+            }
+
             try {
                 $this->syncDynamic($name, $shard);   // fetch & store live map icons
             } catch (\Exception $e) {
@@ -127,6 +133,49 @@ class FoxholeSyncService
         );
 
         $this->info("War report synced for map: $map");
+    }
+
+    // Store static text labels (location names) for a single map.
+    // Static data never changes during a war — skip if already populated for this war.
+    private function syncStatic(string $map, string $shard): void
+    {
+        $warId = optional(WarState::where('shard', $shard)->latest('updated_at')->first())->war_id ?? 'unknown';
+
+        // Already have data for this war+map? Skip — static never changes mid-war.
+        if (MapTextItem::where('shard', $shard)->where('war_id', $warId)->where('map_name', $map)->exists()) {
+            return;
+        }
+
+        $payload = $this->api->staticMap($map);
+        if (!$payload) {
+            $this->info("No static data for map: $map");
+            return;
+        }
+
+        $items = $payload['mapTextItems'] ?? [];
+        if (empty($items)) {
+            return;
+        }
+
+        DB::transaction(function () use ($items, $map, $warId, $shard) {
+            foreach ($items as $item) {
+                MapTextItem::updateOrCreate(
+                    [
+                        'shard'    => $shard,
+                        'war_id'   => $warId,
+                        'map_name' => $map,
+                        'text'     => $item['text'],
+                    ],
+                    [
+                        'x'               => number_format($item['x'], 8, '.', ''),
+                        'y'               => number_format($item['y'], 8, '.', ''),
+                        'map_marker_type' => $item['mapMarkerType'] ?? 'Minor',
+                    ]
+                );
+            }
+        });
+
+        $this->info("Static text items synced for map: $map (items: ".count($items).")");
     }
 
     // Store dynamic icons (bases, facilities, etc.) for a single map
