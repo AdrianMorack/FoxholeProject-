@@ -18,8 +18,8 @@
                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                         </svg>
                         <div>
-                            <h1 class="text-2xl font-bold tracking-wider text-[#e8e8d5]">ALLIED COMMAND</h1>
-                            <p class="text-xs text-[#8b9d83] tracking-widest py-1">OPERATION HEADQUARTERS</p>
+                            <h1 class="text-2xl font-bold tracking-wider text-[#e8e8d5]">FOXHOLE TOOL</h1>
+                            <p class="text-xs text-[#8b9d83] tracking-widest py-1">STATISTICS AND INFORMATION</p>
                         </div>
                     </div>
                     <div class="text-right">
@@ -38,7 +38,7 @@
                     <h2 class="text-3xl font-bold mt-2 text-[#e8e8d5]">STRATEGIC COMMAND CENTER</h2>
                 </div>
                 <p class="text-base text-[#a8b8a0] leading-relaxed max-w-2xl mx-auto">
-                    Access real-time intelligence reports, tactical assessments, and operational maps. 
+                    Access real-time intelligence reports and operational maps. 
                 </p>
             </div>
 
@@ -109,7 +109,7 @@
                 <div class="border-l-4 border-[#ffd700] bg-[#0f140f] px-4 py-3">
                     <div class="flex items-center justify-between gap-4">
                         <p class="text-xs text-[#8b9d83]">
-                            <span class="font-bold text-[#ffd700]">SECURITY NOTICE:</span> If QRF asks where you got this intel, tell them you're just a humble scrapper who stole a radio.
+                            <span class="font-bold text-[#ffd700]">SECURITY NOTICE:</span> If QRF asks where you got this intel, tell them you're just a humble scrooper who stole a radio.
                         </p>
                         @if(isset($stats['last_updated_at']) && $stats['last_updated_at'])
                             <p class="text-xs text-[#8b9d83] whitespace-nowrap">

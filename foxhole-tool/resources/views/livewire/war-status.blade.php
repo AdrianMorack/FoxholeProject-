@@ -9,7 +9,6 @@
         <div class="absolute inset-0 opacity-10" style="background: repeating-linear-gradient(45deg, transparent, transparent 10px, #4a7c59 10px, #4a7c59 20px);"></div>
         <div class="relative max-w-7xl mx-auto px-6 py-10">
             <div class="flex items-center gap-3 mb-4">
-                <svg class="w-9 h-9 text-military-border-green" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
                 </svg>
                 <h1 class="text-3xl font-bold text-military-text-primary uppercase tracking-wider py-4">Operational Status</h1>
@@ -95,7 +94,6 @@
                             :value="$stats['victory_points_warden'] ?? 0"
                             class="border-blue-500/30 bg-blue-900/10"
                         >
-                            Structures counting toward victory
                         </x-ui.stat-box>
 
                         <x-ui.stat-box 
@@ -103,7 +101,6 @@
                             :value="$stats['victory_points_colonial'] ?? 0"
                             class="border-green-500/30 bg-green-900/10"
                         >
-                            Structures counting toward victory
                         </x-ui.stat-box>
                     </div>
                 </x-ui.card-content>
