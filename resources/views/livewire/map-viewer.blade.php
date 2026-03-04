@@ -69,6 +69,7 @@
                                 'MooringCountyHex' => 'MoorsHex',
                                 'OarbreakerHex' => 'OarbreakerIslesHex',
                                 'MarbanHollow' => 'MarbanHollowHex',
+                                'DeadLandsHex' => 'DeadlandsHex',
                             ];
 
                             if (str_starts_with($selectedMap, 'HomeRegion')) {

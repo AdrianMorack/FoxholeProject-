@@ -1,4 +1,4 @@
-@props(['position' => 'bottom-left'])
+@props(['position' => 'bottom-right'])
 
 @php
     $currentShard = session('foxhole_shard', 'baker');
@@ -13,7 +13,7 @@
     };
 @endphp
 
-<form action="{{ route('shard.toggle') }}" method="POST" style="position: fixed !important; bottom: 1.5rem !important; right: 1.5rem !important; z-index: 9999 !important;" class="{{ $positionClasses }} flex items-center gap-2 bg-military-bg-secondary/95 backdrop-blur-sm border-2 border-military-border-green rounded-lg px-4 py-2.5 shadow-lg hover:border-military-text-primary transition-colors">
+<form action="{{ route('shard.toggle') }}" method="POST" class="{{ $positionClasses }} flex items-center gap-2 bg-military-bg-secondary/95 backdrop-blur-sm border-2 border-military-border-green rounded-lg px-4 py-2.5 shadow-lg hover:border-military-text-primary transition-colors">
     @csrf
 
     <!-- Toggle Switch -->
