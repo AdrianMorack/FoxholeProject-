@@ -1,7 +1,7 @@
 <div>
     <!-- Shard Selector -->
     <x-shard-selector />
-    <x-back-button />
+
 
     <div class="min-h-screen bg-military-bg-primary">
     <!-- Military Header with Diagonal Stripes -->
